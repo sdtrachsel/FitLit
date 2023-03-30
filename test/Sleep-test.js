@@ -7,17 +7,17 @@ describe('Sleep', () => {
     beforeEach('data creation', () => {
         sleepList = {
             sleepData: [
-                { "userID": 1, "date": "2023/03/19", "hoursSlept": 4.2, "sleepQuality": 1.2 },
+                { "userID": 12, "date": "2023/03/26", "hoursSlept": 7.2, "sleepQuality": 2.2 },
                 { "userID": 1, "date": "2023/03/24", "hoursSlept": 9.6, "sleepQuality": 4.3 },
-                { "userID": 1, "date": "2023/03/18", "hoursSlept": 4.1, "sleepQuality": 3.9 },
-                { "userID": 1, "date": "2023/03/17", "hoursSlept": 9.2, "sleepQuality": 1.6 },
+                { "userID": 24, "date": "2023/03/24", "hoursSlept": 7.2, "sleepQuality": 2.2 },
                 { "userID": 1, "date": "2023/03/23", "hoursSlept": 8.4, "sleepQuality": 3.5 },
+                { "userID": 10, "date": "2023/03/23", "hoursSlept": 7.2, "sleepQuality": 2.2 },
                 { "userID": 1, "date": "2023/03/22", "hoursSlept": 9.7, "sleepQuality": 4.7 },
                 { "userID": 1, "date": "2023/03/21", "hoursSlept": 4.7, "sleepQuality": 3 },
-                { "userID": 10, "date": "2023/03/23", "hoursSlept": 7.2, "sleepQuality": 2.2 },
-                { "userID": 12, "date": "2023/03/26", "hoursSlept": 7.2, "sleepQuality": 2.2 },
                 { "userID": 1, "date": "2023/03/20", "hoursSlept": 8, "sleepQuality": 3.1 },
-                { "userID": 24, "date": "2023/03/24", "hoursSlept": 7.2, "sleepQuality": 2.2 },
+                { "userID": 1, "date": "2023/03/19", "hoursSlept": 4.2, "sleepQuality": 1.2 },
+                { "userID": 1, "date": "2023/03/18", "hoursSlept": 4.1, "sleepQuality": 3.9 },
+                { "userID": 1, "date": "2023/03/17", "hoursSlept": 9.2, "sleepQuality": 1.6 },
                 { "userID": 1, "date": "2023/03/16", "hoursSlept": 4.8, "sleepQuality": 2.5 },
                 { "userID": 14, "date": "2023/02/24", "hoursSlept": 7.2, "sleepQuality": 2.2 }]
         };
@@ -40,13 +40,13 @@ describe('Sleep', () => {
     it('should store a users sleep logs', function () {
         expect(testUser.userSleepLogs).to.deep.equal([
             { "userID": 1, "date": "2023/03/24", "hoursSlept": 9.6, "sleepQuality": 4.3 },
-            { "userID": 1, "date": "2023/03/19", "hoursSlept": 4.2, "sleepQuality": 1.2 },
-            { "userID": 1, "date": "2023/03/18", "hoursSlept": 4.1, "sleepQuality": 3.9 },
-            { "userID": 1, "date": "2023/03/17", "hoursSlept": 9.2, "sleepQuality": 1.6 },
             { "userID": 1, "date": "2023/03/23", "hoursSlept": 8.4, "sleepQuality": 3.5 },
             { "userID": 1, "date": "2023/03/22", "hoursSlept": 9.7, "sleepQuality": 4.7 },
             { "userID": 1, "date": "2023/03/21", "hoursSlept": 4.7, "sleepQuality": 3 },
             { "userID": 1, "date": "2023/03/20", "hoursSlept": 8, "sleepQuality": 3.1 },
+            { "userID": 1, "date": "2023/03/19", "hoursSlept": 4.2, "sleepQuality": 1.2 },
+            { "userID": 1, "date": "2023/03/18", "hoursSlept": 4.1, "sleepQuality": 3.9 },
+            { "userID": 1, "date": "2023/03/17", "hoursSlept": 9.2, "sleepQuality": 1.6 },
             { "userID": 1, "date": "2023/03/16", "hoursSlept": 4.8, "sleepQuality": 2.5 }]
         );
         });
@@ -90,7 +90,7 @@ describe('Sleep', () => {
             expect(testUser.findDetailByWeek('2023/03/24', "hoursSlept")).to.deep.equal([9.6, 0, 0, 0, 0, 0, 0]);
         });
 
-        it('should be able to find if a given take is not valid when finding the previous 7 days detail', function () {
+        it('should be able to find if a given date is not valid when finding the previous 7 days detail', function () {
             expect(testUser.findDetailByWeek('2023/03/14', "hoursSlept")).to.deep.equal('no such date');
             
             expect(testUser.findDetailByWeek('2022/03/19', "sleepQuality")).to.deep.equal('no such date');
