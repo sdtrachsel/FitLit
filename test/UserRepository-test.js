@@ -90,18 +90,18 @@ describe('User Repository', () => {
       ]
     };
 
-    repository = new UserRepository;
+    repository = new UserRepository(userList);
   });
 
-  it.skip ('should be a function', function () {
+  it ('should be a function', function () {
     expect(UserRepository).to.be.a('function');
   });
 
-  it.skip ('should be an instance of UserRepository', function () {
+  it('should be an instance of UserRepository', function () {
     expect(repository).to.be.an.instanceof(UserRepository);
   });
 
-  it.skip ('should store a repositories of users', function () {
+  it('should store a repositories of users', function () {
     expect(repository.users).to.deep.equal([
       {
         "id": 1,
@@ -184,7 +184,7 @@ describe('User Repository', () => {
       }]);
   });
 
-  it.skip('should find a user by the user id', function () {
+  it('should find a user by the user id', function () {
     expect(repository.findUserById(5)).to.deep.equal({
       "id": 5,
       "name": "Brycen Rutherford",
@@ -199,12 +199,12 @@ describe('User Repository', () => {
     });
   });
 
-  it.skip('should find the overall step goal average of all users', function () {
-    expect(repository.findOverAllStepGoalAvg()).to.equal();
+  it('should find the overall step goal average of all users', function () {
+    expect(repository.findOverAllStepGoalAvg()).to.equal(7167);
   });
 
-  it.skip('should a random user id', function () {
-    expect(testUserID.generateRandomId().id).to.be.below(7);
-    expect(testUserID.generateRandomId().id).to.be.above(0);
+  it('should a random user id', function () {
+    expect(repository.generateRandomId()).to.be.below(7);
+    expect(repository.generateRandomId()).to.be.above(0);
   });
 });
