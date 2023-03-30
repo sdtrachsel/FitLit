@@ -1,11 +1,11 @@
 import { expect } from 'chai';
-import User from '../src/user.js';
+import User from '../src/User.js';
 import UserRepository from '../src/UserRepository';
 
 describe('User', () => {
     let testUser;
 
-    beforeEach('data creation', function () {
+    beforeEach('data creation',() => {
         let userList = {
             users: [
                 {
@@ -51,51 +51,46 @@ describe('User', () => {
             ]
         }
        let allUsers = new UserRepository(userList)
-        testUser = new User(allUsers.findUserbyId(48));
+        testUser = new User(allUsers.findUserById(48));
     });
 
-    it.skip('should be a function', function () {
+    it('should be a function', function () {
         expect(User).to.be.a('function');
     });
 
-    it.skip('should be an instance of user', function () {
+    it('should be an instance of user', function () {
         expect(testUser).to.be.an.instanceof(User);
     });
 
-    it.skip('should be state if a user id is valid', function () {
-        const invalidUser = new User(14)
-        expect(invalidUser).to.be.equal('user not found');
+    it('should store a users id', function () {
+        expect(testUser.id).to.equal(48);
     });
 
-    it.skip('should store a users id', function () {
-        expect(testUser).to.equal(48);
-    });
-
-    it.skip('should store a user name', function () {
+    it('should store a user name', function () {
         expect(testUser.name).to.equal("Kenny Zboncak");
     });
 
-    it.skip('should store a user address', function () {
+    it('should store a user address', function () {
         expect(testUser.address).to.equal("2077 West Loaf, Lilianefort SD 09435");
     });
 
-    it.skip('should store a user email', function () {
+    it('should store a user email', function () {
         expect(testUser.email).to.equal("Aliza.Schulist2@hotmail.com");
     });
 
-    it.skip('should store the stridelength of the user', function () {
+    it('should store the stridelength of the user', function () {
         expect(testUser.strideLength).to.equal(2.5);
     });
 
-    it.skip('should store the daily step goal of the user', function () {
+    it('should store the daily step goal of the user', function () {
         expect(testUser.dailyStepGoal).to.equal(7000);
     });
 
-    it.skip('should store a user address', function () {
-        expect(testUser.userFriends).to.deep.equal([33, 23, 46, 8]);
+    it('should store a users friends', function () {
+        expect(testUser.friends).to.deep.equal([33, 23, 46, 8]);
     });
 
-    it.skip('should find the users first name', function () {
+    it('should find the users first name', function () {
         expect(testUser.findFirstName()).to.be.equal('Kenny');
     });
 });
