@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Hydration from '../src/Hydration';
 
-describe('Sleep', () => {
+describe('Hydration', () => {
     let testUser;
     let hydrationList;
     beforeEach('data creation', () => {
