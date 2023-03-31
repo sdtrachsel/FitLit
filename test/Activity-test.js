@@ -1,9 +1,11 @@
 import { expect } from 'chai';
 import Activity from '../src/Activity';
+import User from '../src/User';
+import UserRepository from '../src/UserRepository';
 
 describe('Activity', () => {
     let testUser;
-    let testUserDetail;
+    let testUserInfo;
     let activityList;
 
     beforeEach('data creation', () => {
@@ -22,8 +24,7 @@ describe('Activity', () => {
             ]
         };
 
-        testUser = new Activity(1, activityList);
-        testUserDetail = new User({
+        testUserInfo = new User({
             "id": 1,
             "name": "Trystan Gorczany",
             "address": "9484 Lucas Flat, West Kittymouth WA 67504",
@@ -38,22 +39,23 @@ describe('Activity', () => {
             ]
         });
 
+        testUser = new Activity(testUserInfo, activityList);
     });
 
-    it.skip('should be a function', function () {
+    it('should be a function', function () {
         expect(Activity).to.be.a('function');
     });
 
-    it.skip('should be an instance of activity', function () {
+    it('should be an instance of activity', function () {
         expect(testUser).to.be.an.instanceof(Activity);
     });
 
-    it.skip('should store a users id', function () {
+    it('should store a users id', function () {
         expect(testUser.userId).to.equal(1);
     });
 
-    it.skip('should store a users activity logs', function () {
-        expect(testUser.userActivityLogs).to.deep.equal([
+    it('should store a users activity logs', function () {
+        expect(testUser.activityLogs).to.deep.equal([
             { "userID": 1, "date": "2023/03/24", "numSteps": 7362, "minutesActive": 250, "flightsOfStairs": 26 },
             { "userID": 1, "date": "2023/03/23", "numSteps": 6502, "minutesActive": 275, "flightsOfStairs": 23 },
             { "userID": 1, "date": "2023/03/22", "numSteps": 5505, "minutesActive": 361, "flightsOfStairs": 15 },
@@ -69,7 +71,7 @@ describe('Activity', () => {
         expect(testUser.milesPerDay('2023/03/18')).to.be.equal(2.7);
     })
 
-    it.skip('should find the active minuts by day', function () {
+    it('should find the active minuts by day', function () {
         expect(testUser.activeMinutesByDay('2023/03/21')).to.be.equal(211);
     });
 
@@ -77,7 +79,4 @@ describe('Activity', () => {
         expect(testUser.stepGoalReached('2023/03/18')).to.be.equal(false);
         expect(testUser.stepGoalReached('2023/03/24')).to.be.equal(true);
     });
-
-
-
 });
