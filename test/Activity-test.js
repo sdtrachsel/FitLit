@@ -66,6 +66,10 @@ describe('Activity', () => {
         ]);
     });
 
+    it('should find the most recent days data', function () {
+        expect(testUser.findMostRecentDay()).to.be.equal("2023/03/24");
+    })
+
     it('should find the miles per day when given a date', function () {
         expect(testUser.milesPerDay('2023/03/22')).to.be.equal(4.2);
         expect(testUser.milesPerDay('2023/03/18')).to.be.equal(2.7);

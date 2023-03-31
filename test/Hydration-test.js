@@ -70,9 +70,9 @@ describe('Hydration', () => {
     });
 
     it('should be able to find the previous 7 days ounces given an end date', function () {
-        expect(testUser.findDetailByWeek('2023/03/24')).to.deep.equal([28, 95, 25, 48, 20, 87, 64]);
+        expect(testUser.findOuncesForWeek('2023/03/24')).to.deep.equal([28, 95, 25, 48, 20, 87, 64]);
 
-        expect(testUser.findDetailByWeek('2023/03/17')).to.deep.equal([55, 74, 0, 0, 0, 0, 0]);
+        expect(testUser.findOuncesForWeek('2023/03/17')).to.deep.equal([55, 74, 0, 0, 0, 0, 0]);
     });
 
 
