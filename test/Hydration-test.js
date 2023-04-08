@@ -69,17 +69,7 @@ describe('Hydration', () => {
         expect(testUser.findOuncesByDay('2022/04/16')).to.be.equal('no such date');
     });
 
-    it('should be able to find the previous 7 days ounces given an end date', function () {
-        expect(testUser.findOuncesForWeek('2023/03/24')).to.deep.equal([28, 95, 25, 48, 20, 87, 64]);
-
-        expect(testUser.findOuncesForWeek('2023/03/17')).to.deep.equal([55, 74, 0, 0, 0, 0, 0]);
-    });
-
-
-    it('should be able to find if a given date is not valid when finding the previous 7 days detail', function () {
-        expect(testUser.findOuncesForWeek('2023/03/14')).to.equal('no such date');
-
-        expect(testUser.findOuncesForWeek('2022/03/19')).to.equal('no such date');
-
+    it('should be able to find the previous 7 days ounces ', function () {
+        expect(testUser.findOuncesLastSevenDays()).to.deep.equal([64, 87, 20, 48, 25, 95, 28]);
     });
 });
