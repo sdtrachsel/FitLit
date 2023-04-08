@@ -10,7 +10,7 @@ class Hydration {
         return this.userHydrationLogs[0].date
     }
 
-    userAllTimeOunceAvg(){
+    calculateAllTimeOunceAvg(){
         const totalOunces = this.userHydrationLogs.reduce((total , currentVal) => {
             return total += currentVal.numOunces;
         }, 0)
