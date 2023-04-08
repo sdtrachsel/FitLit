@@ -4,11 +4,15 @@ class Activity {
         this.userInfo = userInfo;
         this.activityLogs = activityFile.activityData.filter(log => userInfo.id  === log.userID);
     }
+    
+    findMostRecentDay(){
+        return this.activityLogs[0].date
+    }
+
 
     // milesPerDay(day){
     //     const selectedDay = this.activityLogs.find(log => log.date === day);
-    //     const miles = (selectedDay.numSteps * this.userInfo.strideLength) / 5280;
-    
+    //     const miles = (selectedDay.numSteps * this.userInfo.strideLength) / 5280;  
     //     return Math.round(miles * 10) / 10;
     // }
 
