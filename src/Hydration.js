@@ -7,10 +7,10 @@ class Hydration {
     }
 
     findMostRecentDay(){
-        return this.userHydrationLogs[0].date
+        return this.userHydrationLogs[this.userHydrationLogs.length - 1].date
     }
 
-    userAllTimeOunceAvg(){
+    calculateAllTimeOunceAvg(){
         const totalOunces = this.userHydrationLogs.reduce((total , currentVal) => {
             return total += currentVal.numOunces;
         }, 0)
@@ -30,22 +30,10 @@ class Hydration {
         }
     }
 
-    findOuncesForWeek(date) {
-        const selectedDayIndex = this.userHydrationLogs.findIndex(log => log.date === date);
+    findOuncesLastSevenDays() {
+        const sevenDayDetail = this.userHydrationLogs.slice(-7).map(log => log.numOunces);
 
-        const sevenDayDetail = this.userHydrationLogs.slice(selectedDayIndex, selectedDayIndex +7).map(log => log.numOunces);
-
-        let lastWeekDetails = [0, 0, 0, 0, 0, 0, 0]
-
-        sevenDayDetail.forEach((log, index) => {
-            lastWeekDetails[index] = log;
-        });
-
-        if (selectedDayIndex < 0) {
-            return 'no such date';
-        } else {
-            return lastWeekDetails;
-        }
+        return sevenDayDetail
     };
    
   }
