@@ -38,20 +38,19 @@ window.addEventListener('load', () => {
         .then(data => {
             allUsers = new UserRepository(data[0]);
             user = new User(allUsers.generateRandomId())
-            console.log(data[2])
             userSleep = new Sleep(user.id, data[2])
             userHydration = new Hydration(user.id, data[1])
-            userActivity = new Activity(user.id, data[3])
+            userActivity = new Activity(allUsers.findUserById(user.id), data[3])
             loadPage()
         })
 })
 
 function loadPage() {
-    console.log(userActivity)
     setWelcome()
     setUserDisplay()
     displayHydrationWidgets()
     displaySleepWidgets()
+    displayActivityWidgets()
 }
 
 function displayHydrationWidgets() {
@@ -60,16 +59,20 @@ function displayHydrationWidgets() {
 }
 
 function displaySleepWidgets(){
-    //sleep hours
     displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'hours')
     displayWeekInfo('Hours Slept Last Seven Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
-    //sleep quality 
     displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'sleep quality') 
     displayWeekInfo('Sleep Quality Last Seven Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
 }
-// For a user, their sleep data for the latest day (hours slept and quality of sleep)
-// For a user, their sleep data over the course of the latest week (hours slept and quality of sleep)
-// For a user, their all-time average sleep quality and all-time average number of hours slept
+
+function displayActivityWidgets(){
+    displayDayInfo(userActivity.findMostRecentDay().numSteps, 'steps')
+    displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'active minutes')
+    displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'miles')
+    displayWeekInfo('Step Goal Last Seven Days', userActivity.findStepsLastSevenDays(), 'goalMet')
+
+}
+
 function setWelcome() {
     welcomeText.innerText = `Welcome ${user.findFirstName()}!`
 }
