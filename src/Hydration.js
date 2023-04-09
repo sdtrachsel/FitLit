@@ -35,7 +35,7 @@ class Hydration {
         const sevenDayDetail= sevenDays.map((log) => {
             let dayLog = {}
             dayLog.date = log.date.slice(5)
-            dayLog.ounces = log.numOunces
+            dayLog.numOunces = log.numOunces
             return dayLog
         });
 

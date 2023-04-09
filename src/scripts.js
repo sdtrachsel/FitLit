@@ -55,7 +55,7 @@ function loadPage() {
 
 function displayHydrationWidgets() {
     displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'ounces')
-    displayWeekInfo('Ounces Last Seven Days', userHydration.findOuncesLastSevenDays(), 'ounces')
+    displayWeekInfo('Ounces Last Seven Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
 }
 
 function displaySleepWidgets(){

@@ -204,7 +204,6 @@ describe('User Repository', () => {
   });
 
   it('should a random user id', function () {
-    console.log(repository.generateRandomId())
     expect(repository.generateRandomId().id).to.be.below(7);
     expect(repository.generateRandomId().id).to.be.above(0);
     expect(repository.generateRandomId().name).to.be.a('string')

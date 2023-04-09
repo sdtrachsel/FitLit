@@ -15,13 +15,13 @@ class Activity {
         return Math.round(miles * 10) / 10;
     }
 
-    // findActiveMinutesByDay(date){
-    //     const dayDetail = this.activityLogs.find((log) => {
-    //         return log.date === date;
-    //     })
+    findActiveMinutesByDay(date){
+        const dayDetail = this.activityLogs.find((log) => {
+            return log.date === date;
+        })
 
-    //     return dayDetail.minutesActive;
-    // }
+        return dayDetail.minutesActive;
+    }
 
     findStepGoalReachedDay(date) {
         const dayDetail = this.activityLogs.find((log) => {
@@ -48,21 +48,6 @@ class Activity {
 
         return sevenDayDetail
     }
-
-    // findStepGoalLastSevenDays() {
-    //     //add date to the findStepLastSeven
-    //     //then take that and map over added the True/False return
-    //     const sevenDayDetail = this.findStepsLastSevenDays()
-
-    //     const sevenDayGoalDetail = sevenDayDetail.map((daySteps) => {
-    //         if (this.userInfo.dailyStepGoal <= daySteps) {
-    //             return true
-    //         } else {
-    //             return false
-    //         }
-    //     })
-    //     return sevenDayGoalDetail
-    // };
 }
 
 export default Activity;
