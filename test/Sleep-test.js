@@ -80,11 +80,27 @@ describe('Sleep', () => {
         expect(testUser.findDetailByDay('2022/05/16', "hoursSlept")).to.be.equal('no such date');
     });
 
-    it('should be able to find the previous 7 days sleep quality given an end date', function () {
-        expect(testUser.findDetailByWeek('sleepQuality')).to.deep.equal([3.9, 1.2, 3.1, 3, 4.7, 3.5, 4.3]);
+    it('should be able to find the previous 7 days sleep quality ', function () {
+        expect(testUser.findDetailByWeek('sleepQuality')).to.deep.equal([
+            { "date": "03/18", "sleepQuality": 3.9 },
+            { "date": "03/19", "sleepQuality": 1.2 },
+            { "date": "03/20", "sleepQuality": 3.1 },
+            { "date": "03/21", "sleepQuality": 3 },
+            { "date": "03/22", "sleepQuality": 4.7 },
+            { "date": "03/23", "sleepQuality": 3.5 },
+            { "date": "03/24", "sleepQuality": 4.3 }
+        ]);
     });
 
-    it('should be able to find the previous 7 days hours slept given an end date', function () {
-        expect(testUser.findDetailByWeek('hoursSlept')).to.deep.equal([4.1, 4.2, 8, 4.7, 9.7, 8.4, 9.6]);
+    it('should be able to find the previous 7 days hours slept ', function () {
+        expect(testUser.findDetailByWeek('hoursSlept')).to.deep.equal([
+            { "date": "03/18", "hoursSlept": 4.1 },
+            { "date": "03/19", "hoursSlept": 4.2 },
+            { "date": "03/20", "hoursSlept": 8 },
+            { "date": "03/21", "hoursSlept": 4.7 },
+            { "date": "03/22", "hoursSlept": 9.7 },
+            { "date": "03/23", "hoursSlept": 8.4 },
+            { "date": "03/24", "hoursSlept": 9.6 }
+        ]);
     });
 });

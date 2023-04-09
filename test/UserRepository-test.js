@@ -204,7 +204,13 @@ describe('User Repository', () => {
   });
 
   it('should a random user id', function () {
-    expect(repository.generateRandomId()).to.be.below(7);
-    expect(repository.generateRandomId()).to.be.above(0);
+    expect(repository.generateRandomId().id).to.be.below(7);
+    expect(repository.generateRandomId().id).to.be.above(0);
+    expect(repository.generateRandomId().name).to.be.a('string')
+    expect(repository.generateRandomId().address).to.be.a('string')
+    expect(repository.generateRandomId().email).to.be.a('string')
+    expect(repository.generateRandomId().strideLength).to.be.a('number')
+    expect(repository.generateRandomId().dailyStepGoal).to.be.a('number')
+    expect(repository.generateRandomId().friends).to.be.a('array')
   });
 });

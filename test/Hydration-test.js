@@ -70,6 +70,14 @@ describe('Hydration', () => {
     });
 
     it('should be able to find the previous 7 days ounces ', function () {
-        expect(testUser.findOuncesLastSevenDays()).to.deep.equal([64, 87, 20, 48, 25, 95, 28]);
+        expect(testUser.findOuncesLastSevenDays()).to.deep.equal([
+            { "date": "03/18", "numOunces": 64 },
+            { "date": "03/19", "numOunces": 87 },
+            { "date": "03/20", "numOunces": 20 },
+            { "date": "03/21", "numOunces": 48 },
+            { "date": "03/22", "numOunces": 25 },
+            { "date": "03/23", "numOunces": 95 },
+            { "date": "03/24", "numOunces": 28 }
+        ]);
     });
 });

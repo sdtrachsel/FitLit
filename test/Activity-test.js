@@ -73,7 +73,15 @@ describe('Activity', () => {
     });
 
     it('should find the most recent days data', function () {
-        expect(testUser.findMostRecentDay()).to.be.equal("2023/03/24");
+        expect(testUser.findMostRecentDay()).to.deep.equal(
+            {
+                "userID": 1,
+                "date": "2023/03/24",
+                "numSteps": 7362,
+                "minutesActive": 250,
+                "flightsOfStairs": 26
+            }
+        );
     })
 
     it('should find the miles per day when given a date', function () {
@@ -92,6 +100,14 @@ describe('Activity', () => {
     });
 
     it('should find if they reached the step goal for the last seven days', function () {
-        expect(testUser.findStepGoalLastSevenDays()).to.deep.equal([false, false, true, false, false, false, true]);
+        expect(testUser.findStepGoalLastSevenDays()).to.deep.equal([
+            { "date": "03/18", "goalMet": "No", "numSteps": 3505 },
+            { "date": "03/19", "goalMet": "No", "numSteps": 3493 },
+            { "date": "03/20", "goalMet": "Yes!", "numSteps": 9675 },
+            { "date": "03/21", "goalMet": "No", "numSteps": 4575 },
+            { "date": "03/22", "goalMet": "No", "numSteps": 5505 },
+            { "date": "03/23", "goalMet": "No", "numSteps": 6502 },
+            { "date": "03/24", "goalMet": "Yes!", "numSteps": 7362 }
+        ]);
     });
 });

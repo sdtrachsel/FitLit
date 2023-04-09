@@ -19,10 +19,9 @@ class UserRepository {
     };
 
     generateRandomId(){
-      const idOnly = this.users.map(user => user.id)
       const randomIndex = Math.floor(Math.random() * this.users.length);
       
-      return idOnly[randomIndex];
+      return this.users[randomIndex];
       };
     
   }

@@ -1,17 +1,17 @@
 class Activity {
-    constructor(userInfo, activityFile){
+    constructor(userInfo, activityFile) {
         this.userId = userInfo.id;
         this.userInfo = userInfo;
-        this.activityLogs = activityFile.activityData.filter(log => userInfo.id  === log.userID);
-    }
-    
-    findMostRecentDay() {
-        return this.activityLogs[this.activityLogs.length - 1].date;
+        this.activityLogs = activityFile.activityData.filter(log => userInfo.id === log.userID);
     }
 
-    calculateMilesPerDay(day){
+    findMostRecentDay() {
+        return this.activityLogs[this.activityLogs.length - 1];
+    }
+
+    calculateMilesPerDay(day) {
         const selectedDay = this.activityLogs.find(log => log.date === day);
-        const miles = (selectedDay.numSteps * this.userInfo.strideLength) / 5280;  
+        const miles = (selectedDay.numSteps * this.userInfo.strideLength) / 5280;
         return Math.round(miles * 10) / 10;
     }
 
@@ -23,7 +23,7 @@ class Activity {
         return dayDetail.minutesActive;
     }
 
-    findStepGoalReachedDay(date){
+    findStepGoalReachedDay(date) {
         const dayDetail = this.activityLogs.find((log) => {
             return log.date === date
         });
@@ -32,24 +32,22 @@ class Activity {
         return stepGoal <= dayDetail.numSteps;
     }
 
-    findStepsLastSevenDays() {
-        const sevenDayDetail = this.activityLogs.slice(-7).map(log => log.numSteps);
+    findStepGoalLastSevenDays() {
+        const sevenDays = this.activityLogs.slice(-7)
+        const sevenDayDetail = sevenDays.map((log) => {
+            let dayLog = {}
+            dayLog.date = log.date.slice(5)
+            dayLog.numSteps = log.numSteps
+            if (this.userInfo.dailyStepGoal <= log.numSteps) {
+                dayLog.goalMet = 'Yes!'
+            } else {
+                dayLog.goalMet = 'No'
+            }
+            return dayLog
+        });
 
         return sevenDayDetail
     }
-
-    findStepGoalLastSevenDays() {
-        const sevenDayDetail = this.findStepsLastSevenDays()       
-
-        const sevenDayGoalDetail = sevenDayDetail.map((daySteps) => {
-            if (this.userInfo.dailyStepGoal <= daySteps) {
-                return true
-            } else {
-                return false
-            }
-        })
-        return sevenDayGoalDetail
-    };
 }
- 
-  export default Activity;
+
+export default Activity;

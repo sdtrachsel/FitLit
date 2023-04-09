@@ -31,7 +31,13 @@ class Hydration {
     }
 
     findOuncesLastSevenDays() {
-        const sevenDayDetail = this.userHydrationLogs.slice(-7).map(log => log.numOunces);
+        const sevenDays = this.userHydrationLogs.slice(-7)
+        const sevenDayDetail= sevenDays.map((log) => {
+            let dayLog = {}
+            dayLog.date = log.date.slice(5)
+            dayLog.numOunces = log.numOunces
+            return dayLog
+        });
 
         return sevenDayDetail
     };
