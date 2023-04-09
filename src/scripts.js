@@ -69,7 +69,7 @@ function displayActivityWidgets(){
     displayDayInfo(userActivity.findMostRecentDay().numSteps, 'steps')
     displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'active minutes')
     displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'miles')
-    displayWeekInfo('Step Goal Last Seven Days', userActivity.findStepsLastSevenDays(), 'goalMet')
+    displayWeekInfo('Step Goal Last Seven Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
 
 }
 

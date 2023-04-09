@@ -32,7 +32,7 @@ class Activity {
         return stepGoal <= dayDetail.numSteps;
     }
 
-    findStepsLastSevenDays() {
+    findStepGoalLastSevenDays() {
         const sevenDays = this.activityLogs.slice(-7)
         const sevenDayDetail = sevenDays.map((log) => {
             let dayLog = {}
