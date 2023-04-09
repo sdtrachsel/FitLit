@@ -31,7 +31,12 @@ findDetailByDay(date, detail) {
 };
 
 findDetailByWeek(detail) {
-    const sevenDayDetail = this.userSleepLogs.slice(-7).map(log => log[detail]);
+    const sevenDayDetail = this.userSleepLogs.slice(-7).map((log) => {
+        let dayLog = {}
+        dayLog.date = log.date.slice(5)
+        dayLog[detail] = log[detail]
+        return dayLog
+    });
 
     return sevenDayDetail
 };

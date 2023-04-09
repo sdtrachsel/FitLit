@@ -51,14 +51,25 @@ function loadPage() {
     setWelcome()
     setUserDisplay()
     displayHydrationWidgets()
-
+    displaySleepWidgets()
 }
 
-function displayHydrationWidgets(){
+function displayHydrationWidgets() {
     displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'ounces')
-    displayWeekInfo('Ounces Last Seven Days',userHydration.findOuncesLastSevenDays(), 'ounces')
+    displayWeekInfo('Ounces Last Seven Days', userHydration.findOuncesLastSevenDays(), 'ounces')
 }
 
+function displaySleepWidgets(){
+    //sleep hours
+    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'hours')
+    displayWeekInfo('Hours Slept Last Seven Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
+    //sleep quality 
+    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'sleep quality') 
+    displayWeekInfo('Sleep Quality Last Seven Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
+}
+// For a user, their sleep data for the latest day (hours slept and quality of sleep)
+// For a user, their sleep data over the course of the latest week (hours slept and quality of sleep)
+// For a user, their all-time average sleep quality and all-time average number of hours slept
 function setWelcome() {
     welcomeText.innerText = `Welcome ${user.findFirstName()}!`
 }
@@ -76,8 +87,6 @@ function setUserDisplay() {
     </section>`
 }
 
-// Display to show how much water they have consumed today (these displays are often called “widgets” in the FE tech world)
-
 function displayDayInfo(amount, unit) {
     dashboard.innerHTML += `
     <section class="day-info">
@@ -85,10 +94,9 @@ function displayDayInfo(amount, unit) {
         <p>${unit}</p>
     </section>`
 }
-// Display to show much water they have consumed each day over the course of the latest week
 
-function displayWeekInfo(title,dataList, dataDetail) {
-    dashboard.innerHTML +=`
+function displayWeekInfo(title, dataList, dataDetail) {
+    dashboard.innerHTML += `
         <section class="week-info">
             <h2>${title}</h2>
             <table border="4" cellpadding="2" cellspacing="2">
