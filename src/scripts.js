@@ -35,45 +35,43 @@ window.addEventListener('load', () => {
     fetchAllData()
         .then(data => {
             allUsers = new UserRepository(data[0]);
-            user = new User(allUsers.generateRandomId())
+            user = new User(allUsers.generateRandomId());
             userSleep = new Sleep(user.id, data[2])
-            userHydration = new Hydration(user.id, data[1])
-            userActivity = new Activity(allUsers.findUserById(user.id), data[3])
-            loadPage()
+            userHydration = new Hydration(user.id, data[1]);
+            userActivity = new Activity(allUsers.findUserById(user.id), data[3]);
+            loadPage();
         })
 })
 
 function loadPage() {
-    setWelcome()
-    setUserDisplay()
-    makeWidgets()
+    setWelcome();
+    setUserDisplay();
+    makeWidgets();
 }
 
 function makeWidgets(){
-    displayWeekInfo(dashboardRowOne, 'Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
-    displayDayInfo(dashboardRowOne, userActivity.findMostRecentDay().minutesActive, 'Active Minutes')
-    addImage (dashboardRowOne, './images/drink-water.png', 'Cartoon man drinking water', 'single' )
-    displayDayInfo(dashboardRowOne, userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank')
+    displayWeekInfo(dashboardRowOne, 'Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet');
+    displayDayInfo(dashboardRowOne, userActivity.findMostRecentDay().minutesActive, 'Active Minutes');
+    addImage (dashboardRowOne, './images/drink-water.png', 'Cartoon man drinking water', 'single' );
+    displayDayInfo(dashboardRowOne, userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank');
 
-    displayDayInfo(dashboardRowTwo, userActivity.findMostRecentDay().numSteps, 'Steps')
-    addImage (dashboardRowTwo, './images/steps.png', 'Cartoon man running really fast', 'single' )
-    displayDayInfo( dashboardRowTwo, userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles')
-    displayWeekInfo(dashboardRowTwo,'Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
+    displayDayInfo(dashboardRowTwo, userActivity.findMostRecentDay().numSteps, 'Steps');
+    addImage (dashboardRowTwo, './images/steps.png', 'Cartoon man running really fast', 'single' );
+    displayDayInfo( dashboardRowTwo, userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles');
+    displayWeekInfo(dashboardRowTwo,'Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces');
 
     addImage (dashboardRowThree, './images/running.png', 'Cartoon man going up steps', 'single' )
-    displayWeekInfo(dashboardRowThree, 'Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
-    displayDayInfo(dashboardRowThree, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept')
-    addImage (dashboardRowThree, './images/wake-up.png', 'Cartoon man happy to be awake', 'single' )
+    displayWeekInfo(dashboardRowThree, 'Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept');
+    displayDayInfo(dashboardRowThree, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept');
+    addImage (dashboardRowThree, './images/wake-up.png', 'Cartoon man happy to be awake', 'single');
 
-    displayDayInfo(dashboardRowFour, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality') 
-    addImage(dashboardRowFour,'./images/push-up.png','Cartoon man doing push-ups', 'double')
-    displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
+    displayDayInfo(dashboardRowFour, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality'); 
+    addImage(dashboardRowFour,'./images/push-up.png','Cartoon man doing push-ups', 'double');
+    displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality');
 }    
 
-// function addImage (location, image, altText, stylingClass )
-
 function setWelcome() {
-    welcomeText.innerText = `Welcome ${user.findFirstName()}!`
+    welcomeText.innerText = `Welcome ${user.findFirstName()}!`;
 }
 
 function setUserDisplay() {
@@ -86,7 +84,7 @@ function setUserDisplay() {
     <section class="goals">
         <p>Stride length: ${user.strideLength}</p>
         <p>Step Goal: ${user.dailyStepGoal}</p>
-    </section>`
+    </section>`;
 }
 
 function displayDayInfo(location, amount, unit) {
@@ -94,14 +92,14 @@ function displayDayInfo(location, amount, unit) {
     <section class="day-info">
         <h2>${unit}</h2>
         <p>${amount}</p>
-    </section>`
+    </section>`;
 }
 
 function addImage (location, image, altText, stylingClass ){
     location.innerHTML += `
     <section>
         <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}" >
-    </section>`
+    </section>`;
 }
 
 function displayWeekInfo(location, title, dataList, dataDetail) {
@@ -128,5 +126,5 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
                     <td>${dataList[6][dataDetail]}</td>
                 </tr>
             </table>
-        </section>`
+        </section>`;
 }
