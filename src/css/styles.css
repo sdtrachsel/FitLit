@@ -1,5 +1,116 @@
-body, html {
-  background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-  background-repeat: no-repeat;
+body {
+  background-color: #f9f9f9;
   height: 100%;
+  margin: 15px;
 }
+
+h2,
+th,
+td,
+p {
+  color: #121212;
+}
+
+h2 {
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.welcome-text {
+  text-align: left;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.goals,
+.demographics {
+  display: flex;
+  justify-content: space-around;
+}
+
+.demographics{
+  border-top: #121212 1px solid;
+  border-bottom: #121212 1px solid;
+  padding: 5px;
+}
+
+.demographics p {
+  margin: 3px;
+}
+
+.week-info,
+.day-info,
+.goals {
+  border-radius: 15px;
+  border: white 2px solid;
+  margin: 5px;
+  padding: 12px;
+  box-shadow: 0 4px 8px 0 rgba(36, 36, 36, 0.2), 0 6px 20px 0 rgba(36, 36, 36, 0.19);
+}
+
+.goals {
+  height: 20px;
+  margin: 10px 0px;
+  background-color: #0068ff;
+}
+
+.goals p {
+  align-self: center;
+  color: #e2e1e1;
+}
+
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-between;
+}
+
+.week-info,
+.day-info {
+  background-color: #efefef;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.day-info {
+  width: 125px;
+  height: 125px;
+}
+
+.day-info p{
+  color: #0068ff;;
+  width: 100%;
+  margin: 1px;
+  font-size: 40px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.week-info {
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+table{
+  width: 350px;
+  border-collapse: collapse;
+  border: #121212 1px solid;
+}
+
+th{
+  color: #e2e1e1;
+  background-color: #0068ff;;
+  border-bottom: #121212 1px solid;
+  font-weight: 400;
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+

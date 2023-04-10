@@ -36,6 +36,7 @@ const dashboard = document.getElementById('dashboard');
 window.addEventListener('load', () => {
     fetchAllData()
         .then(data => {
+            console.log(allUsers)
             allUsers = new UserRepository(data[0]);
             user = new User(allUsers.generateRandomId())
             userSleep = new Sleep(user.id, data[2])
@@ -48,30 +49,44 @@ window.addEventListener('load', () => {
 function loadPage() {
     setWelcome()
     setUserDisplay()
-    displayHydrationWidgets()
-    displaySleepWidgets()
-    displayActivityWidgets()
+    displayWidgets()
+    // displayHydrationWidgets()
+    // displaySleepWidgets()
+    // displayActivityWidgets()
 }
 
-function displayHydrationWidgets() {
-    displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'ounces')
-    displayWeekInfo('Ounces Last Seven Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
-}
+function displayWidgets(){
+    displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'Active Minutes')
+    displayDayInfo(userActivity.findMostRecentDay().numSteps, 'Steps')
+    displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles')
+    displayWeekInfo('Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
+    displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank')
+    displayWeekInfo('Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
+    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept')
+    displayWeekInfo('Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
+    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality') 
+    displayWeekInfo('Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
+}    
 
-function displaySleepWidgets(){
-    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'hours')
-    displayWeekInfo('Hours Slept Last Seven Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
-    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'sleep quality') 
-    displayWeekInfo('Sleep Quality Last Seven Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
-}
+// function displayHydrationWidgets() {
+//     displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank')
+//     displayWeekInfo('Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
+// }
 
-function displayActivityWidgets(){
-    displayDayInfo(userActivity.findMostRecentDay().numSteps, 'steps')
-    displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'active minutes')
-    displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'miles')
-    displayWeekInfo('Step Goal Last Seven Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
+// function displaySleepWidgets(){
+//     displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept')
+//     displayWeekInfo('Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
+//     displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality') 
+//     displayWeekInfo('Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
+// }
 
-}
+// function displayActivityWidgets(){
+//     displayDayInfo(userActivity.findMostRecentDay().numSteps, 'Steps')
+//     displayWeekInfo('Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
+//     displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles')
+//     displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'Active Minutes')
+
+// }
 
 function setWelcome() {
     welcomeText.innerText = `Welcome ${user.findFirstName()}!`
@@ -84,7 +99,7 @@ function setUserDisplay() {
         <p>${user.address}</p>
         <p>${user.email}</p>
     </section>
-    <section class="class">
+    <section class="goals">
         <p>Stride length: ${user.strideLength}</p>
         <p>Step Goal: ${user.dailyStepGoal}</p>
     </section>`
@@ -93,8 +108,8 @@ function setUserDisplay() {
 function displayDayInfo(amount, unit) {
     dashboard.innerHTML += `
     <section class="day-info">
+        <h2>${unit}</h2>
         <p>${amount}</p>
-        <p>${unit}</p>
     </section>`
 }
 
@@ -102,7 +117,7 @@ function displayWeekInfo(title, dataList, dataDetail) {
     dashboard.innerHTML += `
         <section class="week-info">
             <h2>${title}</h2>
-            <table border="4" cellpadding="2" cellspacing="2">
+            <table>
                 <tr class="date-heading">
                     <th>${dataList[0].date}</th>
                     <th>${dataList[1].date}</th>
@@ -123,6 +138,5 @@ function displayWeekInfo(title, dataList, dataDetail) {
                 </tr>
             </table>
         </section>`
-
 }
 
