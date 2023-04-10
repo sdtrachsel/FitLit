@@ -1,19 +1,14 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-
 // An example of how you tell webpack to use a CSS file
 import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png';
-
+import './images/drink-water.png';
+import './images/steps.png';
+import './images/running.png';
+import './images/wake-up.png';
+import './images/push-up.png';
 
 // An example of how you tell webpack to use a JS file
-
-// import userData from './data/users';
-// import SomeClassYouChangeTheName from './SomeClassYouChangeTheName';
-
 import { fetchAllData } from './apiCalls';
 import UserRepository from './UserRepository';
 import User from './User';
@@ -31,12 +26,14 @@ let userActivity;
 //Selectors
 const welcomeText = document.getElementById('welcomeText');
 const userDisplay = document.getElementById('userInfo');
-const dashboard = document.getElementById('dashboard');
+const dashboardRowOne = document.getElementById('rowOne');
+const dashboardRowTwo = document.getElementById('rowTwo');
+const dashboardRowThree = document.getElementById('rowThree');
+const dashboardRowFour = document.getElementById('rowFour');
 
 window.addEventListener('load', () => {
     fetchAllData()
         .then(data => {
-            console.log(allUsers)
             allUsers = new UserRepository(data[0]);
             user = new User(allUsers.generateRandomId())
             userSleep = new Sleep(user.id, data[2])
@@ -49,44 +46,31 @@ window.addEventListener('load', () => {
 function loadPage() {
     setWelcome()
     setUserDisplay()
-    displayWidgets()
-    // displayHydrationWidgets()
-    // displaySleepWidgets()
-    // displayActivityWidgets()
+    makeWidgets()
 }
 
-function displayWidgets(){
-    displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'Active Minutes')
-    displayDayInfo(userActivity.findMostRecentDay().numSteps, 'Steps')
-    displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles')
-    displayWeekInfo('Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
-    displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank')
-    displayWeekInfo('Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
-    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept')
-    displayWeekInfo('Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
-    displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality') 
-    displayWeekInfo('Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
+function makeWidgets(){
+    displayWeekInfo(dashboardRowOne, 'Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
+    displayDayInfo(dashboardRowOne, userActivity.findMostRecentDay().minutesActive, 'Active Minutes')
+    addImage (dashboardRowOne, './images/drink-water.png', 'Cartoon man drinking water', 'single' )
+    displayDayInfo(dashboardRowOne, userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank')
+
+    displayDayInfo(dashboardRowTwo, userActivity.findMostRecentDay().numSteps, 'Steps')
+    addImage (dashboardRowTwo, './images/steps.png', 'Cartoon man running really fast', 'single' )
+    displayDayInfo( dashboardRowTwo, userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles')
+    displayWeekInfo(dashboardRowTwo,'Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
+
+    addImage (dashboardRowThree, './images/running.png', 'Cartoon man going up steps', 'single' )
+    displayWeekInfo(dashboardRowThree, 'Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
+    displayDayInfo(dashboardRowThree, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept')
+    addImage (dashboardRowThree, './images/wake-up.png', 'Cartoon man happy to be awake', 'single' )
+
+    displayDayInfo(dashboardRowFour, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality') 
+    addImage(dashboardRowFour,'./images/push-up.png','Cartoon man doing push-ups', 'double')
+    displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
 }    
 
-// function displayHydrationWidgets() {
-//     displayDayInfo(userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank')
-//     displayWeekInfo('Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces')
-// }
-
-// function displaySleepWidgets(){
-//     displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept')
-//     displayWeekInfo('Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept')
-//     displayDayInfo(userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality') 
-//     displayWeekInfo('Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality')
-// }
-
-// function displayActivityWidgets(){
-//     displayDayInfo(userActivity.findMostRecentDay().numSteps, 'Steps')
-//     displayWeekInfo('Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet')
-//     displayDayInfo(userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles')
-//     displayDayInfo(userActivity.findMostRecentDay().minutesActive, 'Active Minutes')
-
-// }
+// function addImage (location, image, altText, stylingClass )
 
 function setWelcome() {
     welcomeText.innerText = `Welcome ${user.findFirstName()}!`
@@ -105,16 +89,23 @@ function setUserDisplay() {
     </section>`
 }
 
-function displayDayInfo(amount, unit) {
-    dashboard.innerHTML += `
+function displayDayInfo(location, amount, unit) {
+    location.innerHTML += `
     <section class="day-info">
         <h2>${unit}</h2>
         <p>${amount}</p>
     </section>`
 }
 
-function displayWeekInfo(title, dataList, dataDetail) {
-    dashboard.innerHTML += `
+function addImage (location, image, altText, stylingClass ){
+    location.innerHTML += `
+    <section>
+        <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}" >
+    </section>`
+}
+
+function displayWeekInfo(location, title, dataList, dataDetail) {
+    location.innerHTML += `
         <section class="week-info">
             <h2>${title}</h2>
             <table>
@@ -139,4 +130,3 @@ function displayWeekInfo(title, dataList, dataDetail) {
             </table>
         </section>`
 }
-

@@ -1,7 +1,7 @@
 body {
-  background-color: #f9f9f9;
+  background-color: #f1f1f1;
   height: 100%;
-  margin: 15px;
+  margin: 25px;
 }
 
 h2,
@@ -43,14 +43,13 @@ h2 {
 .week-info,
 .day-info,
 .goals {
-  border-radius: 15px;
-  border: white 2px solid;
   margin: 5px;
   padding: 12px;
   box-shadow: 0 4px 8px 0 rgba(36, 36, 36, 0.2), 0 6px 20px 0 rgba(36, 36, 36, 0.19);
 }
 
 .goals {
+  border: rgb(8, 7, 7) 2px solid;
   height: 20px;
   margin: 10px 0px;
   background-color: #0068ff;
@@ -67,9 +66,17 @@ h2 {
   justify-content:space-between;
 }
 
+.dashboard-row{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-between;
+}
+
+
 .week-info,
 .day-info {
-  background-color: #efefef;
+  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -90,7 +97,8 @@ h2 {
 }
 
 .week-info {
-  width: 370px;
+  width: 495px;
+  height: 125px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,7 +110,7 @@ table{
   border: #121212 1px solid;
 }
 
-th{
+th {
   color: #e2e1e1;
   background-color: #0068ff;;
   border-bottom: #121212 1px solid;
@@ -114,3 +122,16 @@ td {
   text-align: center;
 }
 
+.double {
+  margin: 5px;
+  height: 150px;
+  width: 335px;
+  border: #121212 2px solid;
+}
+
+.single{
+  margin: 5px;
+  height: 150px;
+  width: 150px;
+  border: #121212 2px solid;
+}
