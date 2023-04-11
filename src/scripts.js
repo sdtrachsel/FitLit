@@ -26,6 +26,8 @@ let userActivity;
 //Selectors
 const welcomeText = document.getElementById('welcomeText');
 const userDisplay = document.getElementById('userInfo');
+const userDemographicsDisplay = document.getElementById('userDemographics')
+const userGoalsDisplay= document.getElementById('userGoals')
 const dashboardRowOne = document.getElementById('rowOne');
 const dashboardRowTwo = document.getElementById('rowTwo');
 const dashboardRowThree = document.getElementById('rowThree');
@@ -46,6 +48,7 @@ window.addEventListener('load', () => {
 function loadPage() {
     setWelcome();
     setUserDisplay();
+    setUserGoals()
     makeWidgets();
 }
 
@@ -68,23 +71,23 @@ function makeWidgets(){
     displayDayInfo(dashboardRowFour, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality'); 
     addImage(dashboardRowFour,'./images/push-up.png','Cartoon man doing push-ups', 'double');
     displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality');
-}    
+};
 
 function setWelcome() {
     welcomeText.innerText = `Welcome ${user.findFirstName()}!`;
-}
+};
 
 function setUserDisplay() {
-    userDisplay.innerHTML += `
-    <section class ="demographics">
-        <p>${user.name}</p>
+    userDemographicsDisplay.innerHTML += `
+         <p>${user.name}</p>
         <p>${user.address}</p>
-        <p>${user.email}</p>
-    </section>
-    <section class="goals">
-        <p>Stride length: ${user.strideLength}</p>
-        <p>Step Goal: ${user.dailyStepGoal}</p>
-    </section>`;
+        <p>${user.email}</p>`;
+};
+
+function setUserGoals() {
+    userGoalsDisplay.innerHTML += `
+    <p>Stride length: ${user.strideLength}</p>
+    <p>Step Goal: ${user.dailyStepGoal}</p>`;
 }
 
 function displayDayInfo(location, amount, unit) {
@@ -93,14 +96,14 @@ function displayDayInfo(location, amount, unit) {
         <h2>${unit}</h2>
         <p>${amount}</p>
     </section>`;
-}
+};
 
 function addImage (location, image, altText, stylingClass ){
     location.innerHTML += `
     <section>
         <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}" >
     </section>`;
-}
+};
 
 function displayWeekInfo(location, title, dataList, dataDetail) {
     location.innerHTML += `
@@ -126,4 +129,5 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
                     <td>${dataList[6][dataDetail]}</td>
                 </tr>
             </table>
-        </section>`
+        </section>`;
+};
