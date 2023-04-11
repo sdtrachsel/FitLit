@@ -136,3 +136,7 @@ td {
   width: 150px;
   border: #121212 2px solid;
 }
+
+.hidden{
+  display: none;
+}

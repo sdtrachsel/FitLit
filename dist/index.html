@@ -10,20 +10,25 @@
   <header>
     <!-- logohere -->
     <h2 class="welcome-text" id="welcomeText">Welcome</h2>
-    <section class="user-info" >
-      <section class ="demographics" id="userDemographics">
+    <section class="user-info">
+      <section class="demographics" id="userDemographics">
         <!-- userInfo here -->
-    </section>
-    <section class="goals" id="userGoals">
-      <!-- user goals here -->
-    </section>
-    <section class="ounces-input" id="ouncesInput">
-      <form>
-        <label for="ounces">Ounces Drank</label>
-        <input type="text" id="ounces" name="ounces">
-        <input type="submit" value="Submit">
-      </form>
-    </section>
+      </section>
+      <section class="goals" id="userGoals">
+        <!-- user goals here -->
+      </section>
+      <section class="ounces-input" id="ouncesInput">
+        <form>
+          <label for="date">Date</label>
+          <input type="text" id="formLogDate" name="date" value="" readonly>
+          <label for="ounces">Ounces Drank</label>
+          <input type="number" id="formLogOunces" name="ounces" min="0" max="1000">
+          <input type="submit" value="Submit" id="formSubmit">
+        </form>
+        <p class="form-feedback" id="formFeedback">
+          <!-- feedback here -->
+        </p>
+      </section>
     </section>
   </header>
   <section class="dashboard" id="dashboard">
