@@ -126,5 +126,4 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
                     <td>${dataList[6][dataDetail]}</td>
                 </tr>
             </table>
-        </section>`;
-}
+        </section>`
