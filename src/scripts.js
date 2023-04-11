@@ -15,6 +15,7 @@ import User from './User';
 import Sleep from './Sleep';
 import Activity from './Activity';
 import Hydration from './Hydration';
+import quotes from './quotes';
 
 // Variables
 let allUsers;
@@ -32,7 +33,7 @@ const dashboardRowOne = document.getElementById('rowOne');
 const dashboardRowTwo = document.getElementById('rowTwo');
 const dashboardRowThree = document.getElementById('rowThree');
 const dashboardRowFour = document.getElementById('rowFour');
-
+const motivationalQuote = document.getElementById('motivationalQuote')
 const ouncesFormDate = document.getElementById('formLogDate')
 const ouncesFormOunces = document.getElementById('formLogOunces')
 const formFeedback = document.getElementById('formFeedback')
@@ -59,6 +60,7 @@ function loadPage() {
     setUserDisplay();
     setUserGoals()
     setFormDate()
+    displayMotivationalQuote()
     generateAllWidgets();
 }
 
@@ -236,3 +238,14 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
             </table>
         </section>`;
 };
+
+function getMotivationalQuote(){
+    const randomIndex = Math.floor(Math.random() * quotes.length)
+
+    return quotes[randomIndex]
+}
+
+function displayMotivationalQuote(){
+    motivationalQuote.innerHTML= ''
+    motivationalQuote.innerHTML =`<p>${getMotivationalQuote()}</p>`
+}

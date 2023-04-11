@@ -51,6 +51,7 @@ h2 {
 
 .ounces-form,
 .motivation,
+.motivation-quote,
 .week-info,
 .day-info,
 .goals {
@@ -58,7 +59,7 @@ h2 {
 }
 
 .general-information {
-  height: 150px;
+  height: 170px;
   margin-bottom: 10px;
   margin-top: 15px;
   display: flex;
@@ -95,33 +96,46 @@ form {
   width: 75%;
 }
 
-input[type=submit]{
-  width: 30%;
-  height: 50px;
-  align-self: center;
-  margin-top: 10px;
-  color: #0068ff;
-  border: none;
-  background-color: #f9f9f9;
-}
 
 input[type=text],
-input[type=number]{
+input[type=number] {
   width: 95px;
   margin-left: 15px;
   margin-top: 10px;
 }
 
-input[type=text]{
+input[type=text] {
   background-color: #0068ff;
   border: none;
   color: white;
 }
 
-input[type=text]:hover{
+input[type=text]:hover {
   cursor: pointer;
 }
 
+.form-feedback {
+  font-size: 15px;
+  margin: 3px;
+  font-weight: 600;
+  align-self: center;
+}
+
+input[type=submit] {
+  border: red 1px solid;
+  width: 30%;
+  height: 30px;
+  align-self: center;
+  margin-top: 10px;
+  margin-bottom: 3px;
+  color: #0068ff;
+  border: none;
+  background-color: #f9f9f9;
+}
+
+input[type=submit]:hover {
+  cursor: pointer;
+}
 
 .goals {
   width: 31%;
@@ -149,6 +163,21 @@ input[type=text]:hover{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.motivation-quote {
+  height: 50px;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: black;
+}
+
+.motivation-quote p {
+  width: 100%;
+  padding: 1px;
+  color: #f9f9f9cb;
+  text-align: center;
 }
 
 .dashboard-row {
@@ -198,7 +227,6 @@ table {
 th {
   color: #e2e1e1;
   background-color: #0068ff;
-  ;
   border-bottom: #121212 1px solid;
   font-weight: 400;
   text-align: center;
