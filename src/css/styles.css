@@ -14,12 +14,14 @@ p {
 h2 {
   width: 100%;
   text-align: center;
+  align-self: center;
   font-size: 20px;
   font-weight: 400;
   margin: 5px;
 }
 
 .welcome-text {
+  width: 100%;
   text-align: left;
   font-size: 25px;
   font-weight: 600;
@@ -31,7 +33,7 @@ h2 {
   justify-content: space-around;
 }
 
-.demographics{
+.demographics {
   border-top: #121212 1px solid;
   border-bottom: #121212 1px solid;
   padding: 5px;
@@ -42,36 +44,118 @@ h2 {
 }
 
 .week-info,
-.day-info,
-.goals {
+.day-info {
   margin: 5px;
   padding: 12px;
+}
+
+.ounces-form,
+.motivation,
+.week-info,
+.day-info,
+.goals {
   box-shadow: 0 4px 8px 0 rgba(36, 36, 36, 0.2), 0 6px 20px 0 rgba(36, 36, 36, 0.19);
 }
 
-.goals {
-  border: rgb(8, 7, 7) 2px solid;
-  height: 20px;
-  margin: 10px 0px;
+.general-information {
+  height: 150px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ounces-form {
+  width: 31%;
+  padding: 10px;
   background-color: #0068ff;
+  color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ounces-form-title {
+  width: 100%;
+  margin: 0px;
+  color: #f9f9f9;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.input-row {
+  margin: 5px;
+  align-self: center;
+  width: 75%;
+}
+
+input[type=submit]{
+  width: 30%;
+  height: 50px;
+  align-self: center;
+  margin-top: 10px;
+  color: #0068ff;
+  border: none;
+  background-color: #f9f9f9;
+}
+
+input[type=text],
+input[type=number]{
+  width: 95px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+input[type=text]{
+  background-color: #0068ff;
+  border: none;
+  color: white;
+}
+
+input[type=text]:hover{
+  cursor: pointer;
+}
+
+
+.goals {
+  width: 31%;
+  height: 150px;
+  padding: 0px;
+  margin: 0px;
+  background-color: #0068ff;
+  display: flex;
+  flex-direction: column;
 }
 
 .goals p {
   align-self: center;
-  color: #e2e1e1;
+  color: #f9f9f9;
+}
+
+.motivation {
+  border: purple 1px solid;
+  width: 31%;
+  height: 150px;
+  background-color: #0068ff;
 }
 
 .dashboard {
   display: flex;
   flex-wrap: wrap;
-  justify-content:space-between;
+  justify-content: space-between;
 }
 
 .dashboard-row {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content:space-between;
+  justify-content: space-between;
 }
 
 .week-info,
@@ -87,8 +171,8 @@ h2 {
   height: 125px;
 }
 
-.day-info p{
-  color: #0068ff;;
+.day-info p {
+  color: #0068ff;
   width: 100%;
   margin: 1px;
   font-size: 40px;
@@ -104,7 +188,7 @@ h2 {
   align-items: center;
 }
 
-table{
+table {
   width: 450px;
   height: 80px;
   border-collapse: collapse;
@@ -113,7 +197,8 @@ table{
 
 th {
   color: #e2e1e1;
-  background-color: #0068ff;;
+  background-color: #0068ff;
+  ;
   border-bottom: #121212 1px solid;
   font-weight: 400;
   text-align: center;
@@ -130,9 +215,13 @@ td {
   border: #121212 2px solid;
 }
 
-.single{
+.single {
   margin: 5px;
   height: 150px;
   width: 150px;
   border: #121212 2px solid;
+}
+
+.hidden {
+  display: none;
 }

@@ -10,10 +10,35 @@
   <header>
     <!-- logohere -->
     <h2 class="welcome-text" id="welcomeText">Welcome</h2>
-    <section class="user-info" id="userInfo">
-      <!-- userInfohere -->
-    </section>
+    <section class="user-info">
+      <section class="demographics" id="userDemographics">
+        <!-- userInfo here -->
+      </section>
   </header>
+  <section class="general-information">
+    <section class="ounces-form" id="ouncesInput">
+      <form>
+        <h2 class="ounces-form-title">Log Your Ounces</h2>
+        <div class="input-row">
+          <label for="date">For</label>
+          <input class="date-input" type="text" id="formLogDate" name="date" value="" readonly>
+        </div>
+        <div class="input-row">
+          <label for="ounces">Ounces Drank</label>
+          <input class="ounces-input" type="number" id="formLogOunces" name="ounces" min="0" max="1000">
+        </div>
+        <input type="submit" value="Submit" id="formSubmit">
+        <p class="form-feedback" id="formFeedback"><!-- feedback here --></p>
+      </form>
+    </section>
+    <section class="goals" id="userGoals">
+      <!-- user goals here -->
+    </section>
+    <section class="motivation">
+      <p>test</p>
+    </section>
+  </section>
+  </section>
   <section class="dashboard" id="dashboard">
     <section class="dashboard-row" id="rowOne">
       <!-- widgets here -->
