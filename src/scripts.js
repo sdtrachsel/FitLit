@@ -125,4 +125,3 @@ function displayWeekInfo(title, dataList, dataDetail) {
         </section>`
 
 }
-
