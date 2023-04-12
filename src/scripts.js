@@ -6,6 +6,7 @@ import './images/steps.png';
 import './images/running.png';
 import './images/wake-up.png';
 import './images/push-up.png';
+import './images/gm-logo.png';
 
 import { fetchAllData } from './apiCalls';
 import UserRepository from './UserRepository';
@@ -113,7 +114,7 @@ function genterateRowFourWidgets() {
 }
 
 function setWelcome() {
-    welcomeText.classList.add('hidden')
+    // welcomeText.classList.add('hidden')
     welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`;
 };
 
@@ -282,11 +283,11 @@ function createNewWelcome(firstName) {
         welcomeText.innerText = `You are just warming up!`
 
     } else if (motivationLevel === 'given100') {
-        welcomeHeading.innerText = `Buckle-up ${firstName}`
+        welcomeHeading.innerText = `Buckle-up ${firstName}!`
         welcomeText.innerText = `You are flying!`
 
     } else if (motivationLevel === 'lfg') {
-        welcomeHeading.innerText = `${firstName} you did!`
+        welcomeHeading.innerText = `${firstName}, you did it!`
         welcomeText.innerText = `BEAST MODE ACTIVATED!`
     }
 
