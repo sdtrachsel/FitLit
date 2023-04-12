@@ -3,16 +3,24 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Fitness inSanity</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glory Muscles</title>
 </head>
 
 <body>
   <header>
-    <!-- logohere -->
-    <h2 class="welcome-text" id="welcomeText">Welcome</h2>
-    <section class="user-info">
-      <section class="demographics" id="userDemographics">
-        <!-- userInfo here -->
+    <section class="greeting">
+      <section class="welcome">
+        <div class="welcome-left">
+          <h1 id="welcomeHeading">Welcome</h1>
+          <p class="welcome-text hidden" id="welcomeText"></p>
+        </div>
+        <img class='logo' src="./images/gm-logo.png" alt="">
+      </section>
+      <section class="user-info">
+        <section class="demographics" id="userDemographics">
+          <!-- userInfo here -->
+        </section>
       </section>
   </header>
   <section class="general-information">
@@ -20,26 +28,52 @@
       <form>
         <h2 class="ounces-form-title">Log Your Ounces</h2>
         <div class="input-row">
-          <label for="date">For</label>
+          <label class="date-label" for="date">Date:</label>
           <input class="date-input" type="text" id="formLogDate" name="date" value="" readonly>
         </div>
         <div class="input-row">
-          <label for="ounces">Ounces Drank</label>
+          <label for="ounces">Ounces Drank:</label>
           <input class="ounces-input" type="number" id="formLogOunces" name="ounces" min="0" max="1000">
         </div>
-        <input type="submit" value="Submit" id="formSubmit">
-        <p class="form-feedback" id="formFeedback"><!-- feedback here --></p>
+        <input class="ounces-submit" type="submit" value="Submit" id="ounceSubmit">
+        <p class="form-feedback" id="formFeedback"><!-- form feedback --></p>
       </form>
     </section>
     <section class="goals" id="userGoals">
       <!-- user goals here -->
     </section>
-    <section class="motivation">
-      <p>test</p>
+    <section class="motivation-form">
+      <form>
+        <h2 class="motivation-form-title">How motivated are you?</h2>
+        <div class="radio-row">
+          <input type="radio" id="stillInBed" name="motivation-level" value="stillInBed">
+          <label for="stillInBed" class="radio-label">It's noon and I'm in bed.</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="canteven" name="motivation-level" value="cantEven">
+          <label for="canteven" class="radio-label">I can't even...</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="meh" name="motivation-level" value="meh">
+          <label for="meh" class="radio-label">Meh</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="given100" name="motivation-level" value="given100">
+          <label for="given100" class="radio-label">Giving 100%!!!</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="lfg" name="motivation-level" value="lfg">
+          <label for="lfg" class="radio-label">Let's f***ing go!</label>
+        </div>
+        <input class="motivation-submit" type="submit" value="Submit" id="motivSubmit">
+      </form>
     </section>
   </section>
   </section>
   <section class="dashboard" id="dashboard">
+    <section class="motivation-quote" id="motivationalQuote">
+      <!-- quote here -->
+    </section>
     <section class="dashboard-row" id="rowOne">
       <!-- widgets here -->
     </section>

@@ -4,6 +4,46 @@ body {
   margin: 25px;
 }
 
+.greeting {
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.welcome {
+  height: 110px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.welcome-left {
+  display: flex;
+  margin-bottom: 10px;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.welcome-text {
+  width: 100%;
+  margin: 0px;
+  font-size: 20px;
+  text-align: left;
+  color: #0068ff;
+}
+
+.logo {
+  height: 100%;
+}
+
+h1 {
+  margin: 5px 0px 2px 0px;
+  font-size: 30px;
+  text-align: left;
+}
+
+
 h2,
 th,
 td,
@@ -20,12 +60,6 @@ h2 {
   margin: 5px;
 }
 
-.welcome-text {
-  width: 100%;
-  text-align: left;
-  font-size: 25px;
-  font-weight: 600;
-}
 
 .goals,
 .demographics {
@@ -36,6 +70,7 @@ h2 {
 .demographics {
   border-top: #121212 1px solid;
   border-bottom: #121212 1px solid;
+  margin-bottom: 25px;
   padding: 5px;
 }
 
@@ -50,7 +85,8 @@ h2 {
 }
 
 .ounces-form,
-.motivation,
+.motivation-form,
+.motivation-quote,
 .week-info,
 .day-info,
 .goals {
@@ -58,7 +94,7 @@ h2 {
 }
 
 .general-information {
-  height: 150px;
+  height: 195px;
   margin-bottom: 10px;
   margin-top: 15px;
   display: flex;
@@ -66,89 +102,142 @@ h2 {
   justify-content: space-between;
 }
 
+.motivation-form,
 .ounces-form {
-  width: 31%;
   padding: 10px;
-  background-color: #0068ff;
-  color: #f9f9f9;
+  background-color: #f9f9f9;
+  color: #121212;
   display: flex;
   flex-direction: column;
+}
+
+.motivation-form-title,
+.ounces-form-title {
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #121212;
+  font-size: 20px;
 }
 
 form {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-.ounces-form-title {
-  width: 100%;
-  margin: 0px;
-  color: #f9f9f9;
-  font-size: 15px;
-  font-weight: 600;
 }
 
 .input-row {
-  margin: 5px;
   align-self: center;
   width: 75%;
 }
 
-input[type=submit]{
-  width: 30%;
-  height: 50px;
-  align-self: center;
-  margin-top: 10px;
-  color: #0068ff;
-  border: none;
-  background-color: #f9f9f9;
+.date-label {
+  padding-left: 25px;
+  margin-left: 40px;
 }
 
 input[type=text],
-input[type=number]{
+input[type=number] {
   width: 95px;
   margin-left: 15px;
   margin-top: 10px;
 }
 
-input[type=text]{
-  background-color: #0068ff;
+input[type=text] {
+  background-color: #f9f9f9;
   border: none;
-  color: white;
+  color: black;
 }
 
-input[type=text]:hover{
+input[type=text]:hover {
+  cursor: default;
+}
+
+.motivation-form-title {
+  margin-bottom: 3px;
+}
+
+.form-feedback {
+  font-size: 15px;
+  margin: 3px;
+  font-weight: 600;
+  align-self: center;
+  color: #0068ff;
+}
+
+input[type=submit] {
+  border: 2px #0068ff solid;
+  width: 30%;
+  height: 30px;
+  align-self: center;
+  margin-bottom: 3px;
+  color: #0068ff;
+  background-color: #f9f9f9;
+}
+
+.ounces-submit {
+  margin-top: 15px;
+}
+
+.motivation-submit {
+  margin-top: 8px;
+}
+
+input[type=submit]:hover {
   cursor: pointer;
 }
 
+.goals,
+.motivation-form,
+.ounces-form {
+  width: 31%;
+}
+
+.radio-label {
+  font-size: 15px;
+}
+
+input[type=radio] {
+  margin-left: 30px;
+  cursor: pointer;
+}
 
 .goals {
-  width: 31%;
-  height: 150px;
   padding: 0px;
   margin: 0px;
-  background-color: #0068ff;
+  background-color: #f1f1f1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .goals p {
+  margin: 0px;
   align-self: center;
-  color: #f9f9f9;
-}
-
-.motivation {
-  border: purple 1px solid;
-  width: 31%;
-  height: 150px;
-  background-color: #0068ff;
+  font-size: 30px;
+  font-weight: 500;
+  color: black;
 }
 
 .dashboard {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.motivation-quote {
+  height: 50px;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: black;
+}
+
+.motivation-quote p {
+  width: 100%;
+  padding: 1px;
+  color: #f9f9f9cb;
+  text-align: center;
 }
 
 .dashboard-row {
@@ -198,7 +287,6 @@ table {
 th {
   color: #e2e1e1;
   background-color: #0068ff;
-  ;
   border-bottom: #121212 1px solid;
   font-weight: 400;
   text-align: center;

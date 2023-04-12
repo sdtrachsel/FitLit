@@ -1,20 +1,20 @@
 // An example of how you tell webpack to use a CSS file
 import './css/styles.css';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/drink-water.png';
 import './images/steps.png';
 import './images/running.png';
 import './images/wake-up.png';
 import './images/push-up.png';
+import './images/gm-logo.png';
 
-// An example of how you tell webpack to use a JS file
 import { fetchAllData } from './apiCalls';
 import UserRepository from './UserRepository';
 import User from './User';
 import Sleep from './Sleep';
 import Activity from './Activity';
 import Hydration from './Hydration';
+import quotes from './quotes';
 
 // Variables
 let allUsers;
@@ -23,24 +23,34 @@ let userSleep;
 let userHydration;
 let userActivity;
 
-//Selectors
-const welcomeText = document.getElementById('welcomeText');
-// const userDisplay = document.getElementById('userInfo');
+// Selectors
+const welcomeHeading = document.getElementById('welcomeHeading');
+const welcomeText = document.getElementById('welcomeText')
 const userDemographicsDisplay = document.getElementById('userDemographics')
 const userGoalsDisplay = document.getElementById('userGoals')
+const motivationalQuote = document.getElementById('motivationalQuote')
 const dashboardRowOne = document.getElementById('rowOne');
 const dashboardRowTwo = document.getElementById('rowTwo');
 const dashboardRowThree = document.getElementById('rowThree');
 const dashboardRowFour = document.getElementById('rowFour');
-
 const ouncesFormDate = document.getElementById('formLogDate')
 const ouncesFormOunces = document.getElementById('formLogOunces')
+const ouncesFormSubmit = document.getElementById('ounceSubmit')
 const formFeedback = document.getElementById('formFeedback')
+const motivationBtns = document.getElementsByName('motivation-level')
+const motivationSubmit = document.getElementById('motivSubmit')
 
-addEventListener("submit", (event) => {
+ouncesFormSubmit.addEventListener("click", (event) => {
     event.preventDefault();
+    console.log(event)
     submitForm()
 });
+
+motivationSubmit.addEventListener('click', (event) => {
+    event.preventDefault();
+    createNewWelcome(user.findFirstName())
+    clearMotivationSelection()
+})
 
 window.addEventListener('load', () => {
     fetchAllData()
@@ -57,8 +67,9 @@ window.addEventListener('load', () => {
 function loadPage() {
     setWelcome();
     setUserDisplay();
-    setUserGoals()
-    setFormDate()
+    setUserGoals();
+    setFormDate();
+    displayMotivationalQuote();
     generateAllWidgets();
 }
 
@@ -94,8 +105,8 @@ function genterateRowThreeWidgets() {
     addImage(dashboardRowThree, './images/wake-up.png', 'Cartoon man happy to be awake', 'single');
 }
 
-function genterateRowFourWidgets(){
-    dashboardRowFour.innerHTML=''
+function genterateRowFourWidgets() {
+    dashboardRowFour.innerHTML = ''
     displayDayInfo(dashboardRowFour, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality');
     addImage(dashboardRowFour, './images/push-up.png', 'Cartoon man doing push-ups', 'double');
     displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality');
@@ -103,7 +114,8 @@ function genterateRowFourWidgets(){
 }
 
 function setWelcome() {
-    welcomeText.innerText = `Welcome ${user.findFirstName()}!`;
+    // welcomeText.classList.add('hidden')
+    welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`;
 };
 
 function setUserDisplay() {
@@ -143,7 +155,7 @@ function submitForm() {
             displayFailureFeedback()
             resetForm()
         });
-   }
+}
 
 function updateOuncesInformation(data) {
     userHydration.userHydrationLogs.push(data)
@@ -159,12 +171,12 @@ function displayFailureFeedback() {
     formFeedback.innerText = 'Uh oh! Try again later!';
 }
 
-function clearFormFeeback(){
-    formFeedback.innerHTML=''
+function clearFormFeeback() {
+    formFeedback.innerHTML = ''
 }
 
 function resetForm() {
-    ouncesFormOunces.value=''
+    ouncesFormOunces.value = ''
     setFormDate()
     setTimeout(clearFormFeeback, 2000)
 }
@@ -236,3 +248,54 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
             </table>
         </section>`;
 };
+
+function getMotivationalQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length)
+
+    return quotes[randomIndex]
+}
+
+function displayMotivationalQuote() {
+    motivationalQuote.innerHTML = ''
+    motivationalQuote.innerHTML = `<p>${getMotivationalQuote()}</p>`
+}
+
+function findMotivationSelection() {
+    const selection = Array.from(motivationBtns).find(btn => {
+        return btn.checked === true;
+    })
+    return selection.value;
+}
+
+function createNewWelcome(firstName) {
+    let motivationLevel = findMotivationSelection()
+
+    if (motivationLevel === 'stillInBed') {
+        welcomeHeading.innerText = `Wake-up ${firstName}!`;
+        welcomeText.innerText = `The world isn't going to conquer itself!`;
+
+    } else if (motivationLevel === 'cantEven') {
+        welcomeHeading.innerText = `Hustle up ${firstName}!`
+        welcomeText.innerText = `The worms won't catch themselves!`
+
+    } else if (motivationLevel === 'meh') {
+        welcomeHeading.innerText = `Watchout ${firstName}!`
+        welcomeText.innerText = `You are just warming up!`
+
+    } else if (motivationLevel === 'given100') {
+        welcomeHeading.innerText = `Buckle-up ${firstName}!`
+        welcomeText.innerText = `You are flying!`
+
+    } else if (motivationLevel === 'lfg') {
+        welcomeHeading.innerText = `${firstName}, you did it!`
+        welcomeText.innerText = `BEAST MODE ACTIVATED!`
+    }
+
+    welcomeText.classList.remove('hidden')
+}
+
+function clearMotivationSelection() {
+    motivationBtns.forEach((btn) => {
+        btn.checked = false;
+    })
+}
