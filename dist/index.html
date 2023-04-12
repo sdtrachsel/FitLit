@@ -3,13 +3,17 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fitness inSanity</title>
 </head>
 
 <body>
   <header>
     <!-- logohere -->
-    <h2 class="welcome-text" id="welcomeText">Welcome</h2>
+    <section class="welcome">
+    <h1 class="welcome-heading" id="welcomeHeading">Welcome</h1>
+    <p class="welcome-text hidden" id="welcomeText"></p>
+  </section>
     <section class="user-info">
       <section class="demographics" id="userDemographics">
         <!-- userInfo here -->
@@ -27,7 +31,7 @@
           <label for="ounces">Ounces Drank</label>
           <input class="ounces-input" type="number" id="formLogOunces" name="ounces" min="0" max="1000">
         </div>
-        <input type="submit" value="Submit" id="formSubmit">
+        <input type="submit" value="Submit" id="ounceSubmit">
         <p class="form-feedback" id="formFeedback"></p>
       </form>
     </section>
@@ -35,13 +39,36 @@
       <!-- user goals here -->
     </section>
     <section class="motivation-form">
-      <!-- motivation-form here -->
+      <form>
+        <h2 motivation-form-title>How motivated are you?</h2>
+        <div class="radio-row">
+          <input type="radio" id="stillInBed" name="motivation-level" value="stillInBed">
+          <label for="stillInBed">It's noon and I'm in bed.</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="canteven" name="motivation-level" value="cantEven">
+          <label for="canteven">I can't even...</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="meh" name="motivation-level" value="meh">
+          <label for="meh">Meh</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="given100" name="motivation-level" value="given100">
+          <label for="given100">Giving 100%!!!</label>
+        </div>
+        <div class="radio-row">
+          <input type="radio" id="lfg" name="motivation-level" value="lfg">
+          <label for="lfg">Let's f***ing go!</label>
+        </div>
+        <input type="submit" value="Submit" id="motivSubmit">
+      </form>
     </section>
   </section>
   </section>
   <section class="dashboard" id="dashboard">
     <section class="motivation-quote" id="motivationalQuote">
-      <!-- quotes here -->
+      <!-- quote here -->
     </section>
     <section class="dashboard-row" id="rowOne">
       <!-- widgets here -->
