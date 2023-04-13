@@ -29,13 +29,14 @@
       <fieldset>
         <legend class="ounces-form-title">Log Your Ounces</legend>
         <div class="input-row">
-          <label for="formLogDate" class="date-label">Date:</label>
-          <input class="date-input" type="text" id="formLogDate" name="date" required>
+          <label for="formLogDate" class="oz-label">Date:</label>
+          <input type="text" id="formLogDate" name="date" required>
         </div>
         <div class="input-row">
           <label for="formLogOunces">Ounces Drank:</label>
-          <input type="number" id="formLogOunces" name="ounces" min="0" max="1000" class="ounces-input" required>
+          <input type="number" id="formLogOunces" name="ounces" min="0" max="1000" required>
         </div>
+        <p class="required">(all fields required)</p>
         <input class="ounces-submit" type="submit" value="Submit">
         <p class="form-feedback" id="formFeedback">Feeddback blah bha bha bha<!-- form feedback --></p>
       </fieldset>
