@@ -25,17 +25,17 @@
   </header>
   <section class="general-information">
     <section class="ounces-form" id="ouncesInput">
-      <form>
+      <form id="ouncesForm">
         <h2 class="ounces-form-title">Log Your Ounces</h2>
         <div class="input-row">
-          <label class="date-label" for="date">Date:</label>
-          <input class="date-input" type="text" id="formLogDate" name="date" value="" readonly>
+          <label  for="formLogDate" class="date-label">Date:</label>
+          <input class="date-input" type="text" id="formLogDate" name="date" required>
         </div>
         <div class="input-row">
-          <label for="ounces">Ounces Drank:</label>
-          <input class="ounces-input" type="number" id="formLogOunces" name="ounces" min="0" max="1000">
+          <label for="formLogOunces">Ounces Drank:</label>
+          <input  type="number" id="formLogOunces" name="ounces" min="0" max="1000" class="ounces-input" required>
         </div>
-        <input class="ounces-submit" type="submit" value="Submit" id="ounceSubmit">
+        <input class="ounces-submit" type="submit" value="Submit">
         <p class="form-feedback" id="formFeedback"><!-- form feedback --></p>
       </form>
     </section>
@@ -43,7 +43,7 @@
       <!-- user goals here -->
     </section>
     <section class="motivation-form">
-      <form>
+      <form id="motivationForm">
         <h2 class="motivation-form-title">How motivated are you?</h2>
         <div class="radio-row">
           <input type="radio" id="stillInBed" name="motivation-level" value="stillInBed">
@@ -87,7 +87,7 @@
       <!-- widgets here -->
     </section>
   </section>
-  <script src="bundle.js"></script>
+ <script src="bundle.js"></script>
 </body>
 
 </html>

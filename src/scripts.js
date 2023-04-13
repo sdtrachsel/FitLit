@@ -1,5 +1,5 @@
-// An example of how you tell webpack to use a CSS file
 import './css/styles.css';
+import '../node_modules/js-datepicker/dist/datepicker.min.css';
 
 import './images/drink-water.png';
 import './images/steps.png';
@@ -8,6 +8,7 @@ import './images/wake-up.png';
 import './images/push-up.png';
 import './images/gm-logo.png';
 
+import datepicker from 'js-datepicker'
 import { fetchAllData } from './apiCalls';
 import UserRepository from './UserRepository';
 import User from './User';
@@ -15,6 +16,8 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import quotes from './quotes';
+
+
 
 // Variables
 let allUsers;
@@ -33,20 +36,28 @@ const dashboardRowOne = document.getElementById('rowOne');
 const dashboardRowTwo = document.getElementById('rowTwo');
 const dashboardRowThree = document.getElementById('rowThree');
 const dashboardRowFour = document.getElementById('rowFour');
+
+//Forms
+const motivationForm = document.getElementById('motivationForm')
+const motivationBtns = document.getElementsByName('motivation-level')
+const ouncesForm = document.getElementById('ouncesForm')
 const ouncesFormDate = document.getElementById('formLogDate')
 const ouncesFormOunces = document.getElementById('formLogOunces')
-const ouncesFormSubmit = document.getElementById('ounceSubmit')
 const formFeedback = document.getElementById('formFeedback')
-const motivationBtns = document.getElementsByName('motivation-level')
-const motivationSubmit = document.getElementById('motivSubmit')
-
-ouncesFormSubmit.addEventListener("click", (event) => {
-    event.preventDefault();
-    console.log(event)
-    submitForm()
+const picker = datepicker(ouncesFormDate, {
+    formatter: (input, date) => {
+        const value = date.toLocaleDateString()
+        input.value = value
+    }
 });
 
-motivationSubmit.addEventListener('click', (event) => {
+// Event Listeners
+ouncesForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    submitOuncesForm()
+});
+
+motivationForm.addEventListener('submit', (event) => {
     event.preventDefault();
     createNewWelcome(user.findFirstName())
     clearMotivationSelection()
@@ -63,6 +74,8 @@ window.addEventListener('load', () => {
             loadPage();
         })
 })
+
+
 
 function loadPage() {
     setWelcome();
@@ -114,7 +127,7 @@ function genterateRowFourWidgets() {
 }
 
 function setWelcome() {
-    // welcomeText.classList.add('hidden')
+    welcomeText.classList.add('hidden')
     welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`;
 };
 
@@ -131,30 +144,80 @@ function setUserGoals() {
     <p>Step Goal: ${user.dailyStepGoal}</p>`;
 }
 
-function submitForm() {
-    const newLog = {
-        "userID": user.id,
-        "date": ouncesFormDate.value,
-        "numOunces": ouncesFormOunces.value
+function formatFormSubDate(formDate) {
+    const date = formDate.split('/')
+    let formDay = date[1]
+    let formMonth = date[0]
+    let formYear = date[2]
+
+    if (formDay.length < 2) {
+        formDay = '0' + formDay
     }
 
-    fetch('http://localhost:3001/api/v1/hydration', {
-        method: 'POST',
-        body: JSON.stringify(newLog),
-        headers: {
-            'Content-Type': 'application/json'
+    if (formMonth.length < 2) {
+        formMonth = '0' + formMonth
+    }
+
+    return (`${formYear}/${formMonth}/${formDay}`)
+}
+
+function validateOunceFormOz() {
+    const subOz = Number (ouncesFormOunces.value);
+
+    if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
+        return true
+    } else {
+        displayFailureFeedback('invalidOz')
+        return false
+    };
+}
+
+function validateOunceFormDate() {
+    const subDate = formatFormSubDate(ouncesFormDate.value)
+    let loggedDates = userHydration.userHydrationLogs.map(log => log.date)
+
+// what if its not a date???
+    if (!loggedDates.includes(subDate)) {
+        return true
+    } else if(loggedDates.includes(subDate)) {
+        displayFailureFeedback('logExists')
+        return false
+    } 
+}
+
+function submitOuncesForm() {
+    if (validateOunceFormDate() && validateOunceFormOz()) {
+        const newLog = {
+            "userID": user.id,
+            "date": formatFormSubDate(ouncesFormDate.value),
+            "numOunces": Number (ouncesFormOunces.value)
         }
-    })
-        .then(response => response.json())
-        .then(json => {
-            updateOuncesInformation(json)
-            displaySuccessFeedback()
-            resetForm()
+
+        fetch('http://localhost:3001/api/v1/hydration', {
+            method: 'POST',
+            body: JSON.stringify(newLog),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-        .catch(err => {
-            displayFailureFeedback()
-            resetForm()
-        });
+            .then((response) => {
+                return response.json()
+                //// Catch 422  
+                // if (response.ok) {
+                //     throw new Error(response)
+                // } else {}               
+            })
+            .then(json => {
+                updateOuncesInformation(json)
+                displaySuccessFeedback()
+                resetForm()
+            })
+            .catch(err => {
+                console.log(err)
+                displayFailureFeedback('other')
+                resetForm()
+            });
+    }
 }
 
 function updateOuncesInformation(data) {
@@ -167,8 +230,15 @@ function displaySuccessFeedback() {
     formFeedback.innerText = 'Glug! Glug! Nice work!';
 }
 
-function displayFailureFeedback() {
-    formFeedback.innerText = 'Uh oh! Try again later!';
+function displayFailureFeedback(type) {
+    let failureFeedback = {
+        invalidOz: 'Ounces must be between 0 and 1000',
+        logExists: 'You already logged ounces for that day',
+        allFields: 'Please complete all fields',
+        other: 'Uh oh! Try again later!'
+    };
+
+    formFeedback.innerText = `${failureFeedback[type]}`;
 }
 
 function clearFormFeeback() {
@@ -176,35 +246,17 @@ function clearFormFeeback() {
 }
 
 function resetForm() {
+    console.log('hydration logs',userHydration.userHydrationLogs)
     ouncesFormOunces.value = ''
     setFormDate()
     setTimeout(clearFormFeeback, 2000)
 }
 
 function setFormDate() {
+    ouncesFormDate.value = '';
     const logToDate = new Date(userHydration.findMostRecentDay())
     const increasedDate = new Date(logToDate.getTime() + (24 * 60 * 60 * 1000))
-    const increasedDateMonth = increasedDate.getMonth() + 1
-    const increasedDateDay = increasedDate.getDate()
-
-    let newStringMonth;
-    if (increasedDateMonth.toString().length < 2) {
-        newStringMonth = `0${increasedDateMonth}`
-    } else {
-        newStringMonth = increasedDateMonth
-    }
-
-    let newStringDay;
-    if (increasedDateDay.toString().length < 2) {
-        newStringDay = `0${increasedDateDay}`
-    } else {
-        newStringDay = increasedDateDay
-    }
-
-    const newDateToString = `${increasedDate.getFullYear()}/${newStringMonth}/${newStringDay}`
-
-    ouncesFormDate.value = newDateToString
-    ouncesFormDate.placeHolder = newDateToString
+    picker.navigate(increasedDate)
 }
 
 function displayDayInfo(location, amount, unit) {
@@ -267,6 +319,7 @@ function findMotivationSelection() {
     return selection.value;
 }
 
+// Refactor updating welcome
 function createNewWelcome(firstName) {
     let motivationLevel = findMotivationSelection()
 
