@@ -1,13 +1,11 @@
 import './css/styles.css';
 import '../node_modules/js-datepicker/dist/datepicker.min.css';
-
 import './images/drink-water.png';
 import './images/steps.png';
 import './images/running.png';
 import './images/wake-up.png';
 import './images/push-up.png';
 import './images/gm-logo.png';
-
 import datepicker from 'js-datepicker'
 import { fetchAllData } from './apiCalls';
 import UserRepository from './UserRepository';
@@ -16,10 +14,9 @@ import Sleep from './Sleep';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import quotes from './quotes';
+import feedback from './feedback';
+import welcome from './welcome';
 
-
-
-// Variables
 let allUsers;
 let user;
 let userSleep;
@@ -36,8 +33,6 @@ const dashboardRowOne = document.getElementById('rowOne');
 const dashboardRowTwo = document.getElementById('rowTwo');
 const dashboardRowThree = document.getElementById('rowThree');
 const dashboardRowFour = document.getElementById('rowFour');
-
-//Forms
 const motivationForm = document.getElementById('motivationForm')
 const motivationBtns = document.getElementsByName('motivation-level')
 const ouncesForm = document.getElementById('ouncesForm')
@@ -59,7 +54,7 @@ ouncesForm.addEventListener('submit', (event) => {
 
 motivationForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    createNewWelcome(user.findFirstName())
+    createNewWelcome(user.findFirstName(),findMotivationSelection())
     clearMotivationSelection()
 })
 
@@ -74,8 +69,6 @@ window.addEventListener('load', () => {
             loadPage();
         })
 })
-
-
 
 function loadPage() {
     setWelcome();
@@ -145,56 +138,56 @@ function setUserGoals() {
 }
 
 function formatFormSubDate(formDate) {
-    const date = formDate.split('/')
-    let formDay = date[1]
-    let formMonth = date[0]
-    let formYear = date[2]
+    const date = formDate.split('/');
+    let formDay = date[1];
+    let formMonth = date[0];
+    let formYear = date[2];
 
     if (formDay.length < 2) {
-        formDay = '0' + formDay
-    }
+        formDay = '0' + formDay;
+    };
 
     if (formMonth.length < 2) {
-        formMonth = '0' + formMonth
-    }
+        formMonth = '0' + formMonth;
+    };
 
-    return (`${formYear}/${formMonth}/${formDay}`)
+    return (`${formYear}/${formMonth}/${formDay}`);
 }
 
 function validateOunceFormOz() {
     const subOz = Number(ouncesFormOunces.value);
 
     if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
-        return true
+        return true;
     } else {
-        displayFailureFeedback('invalidOz')
-        return false
+        displayFormFeedback('invalidOz');
+        return false;
     };
 }
 
 function validateOunceFormDate() {
-    const subDate = formatFormSubDate(ouncesFormDate.value)
-    let loggedDates = userHydration.userHydrationLogs.map(log => log.date)
+    const subDate = formatFormSubDate(ouncesFormDate.value);
+    let loggedDates = userHydration.userHydrationLogs.map(log => log.date);
 
     if (!loggedDates.includes(subDate)) {
-        return true
+        return true;
     } else if (loggedDates.includes(subDate)) {
-        displayFailureFeedback('logExists')
-        return false
+        displayFormFeedback('logExists');
+        return false;
     }
 }
 
 function checkIsDate(dateSrting) {
-    const date = dateSrting.split('/')
-    let formDay = Number(date[1])
-    let formMonth = Number(date[0])
-    let formYear = Number(date[2])
+    const date = dateSrting.split('/');
+    let formDay = Number(date[1]);
+    let formMonth = Number(date[0]);
+    let formYear = Number(date[2]);
 
     if (formDay > 0 && formDay < 32 && formMonth > 0 && formMonth < 13 && formYear > 2000) {
-        return true
+        return true;
     } else {
-        displayFailureFeedback('invalidDate')
-        return false
+        displayFormFeedback('invalidDate');
+        return false;
     }
 }
 
@@ -222,14 +215,14 @@ function submitOuncesForm() {
             })
             .then(json => {
                 updateOuncesInformation(json);
-                displaySuccessFeedback();
+                displayFormFeedback('success');
                 resetForm();
             })
             .catch(err => {
                 if (err.status === 422) {
-                    displayFailureFeedback('allFields');
+                    displayFormFeedback('allFields');
                 } else {
-                    displayFailureFeedback('other');
+                    displayFormFeedback('other');
                 }
                 resetForm();
             });
@@ -237,43 +230,30 @@ function submitOuncesForm() {
 }
 
 function updateOuncesInformation(data) {
-    userHydration.userHydrationLogs.push(data)
-    generateRowOneWidgets()
-    generateRowTwoWidgets()
+    userHydration.userHydrationLogs.push(data);
+    generateRowOneWidgets();
+    generateRowTwoWidgets();
 }
 
-function displaySuccessFeedback() {
-    formFeedback.innerText = 'Glug! Glug! Nice work!';
-}
-
-function displayFailureFeedback(type) {
-    let failureFeedback = {
-        invalidDate: 'Please enter date as MM/DD/YYY',
-        invalidOz: 'Ounces must be between 0 and 1000',
-        logExists: 'You already logged ounces for that day',
-        allFields: 'Please complete all fields',
-        other: 'Uh oh! Try again later!'
-    };
-
-    formFeedback.innerText = `${failureFeedback[type]}`;
+function displayFormFeedback(type) {
+    formFeedback.innerText = `${feedback[type]}`;
 }
 
 function clearFormFeeback() {
-    formFeedback.innerHTML = ''
+    formFeedback.innerHTML = '';
 }
 
 function resetForm() {
-    console.log('hydration logs', userHydration.userHydrationLogs)
-    ouncesFormOunces.value = ''
-    setFormDate()
-    setTimeout(clearFormFeeback, 2000)
+    ouncesFormOunces.value = '';
+    setFormDate();
+    setTimeout(clearFormFeeback, 3000);
 }
 
 function setFormDate() {
     ouncesFormDate.value = '';
-    const logToDate = new Date(userHydration.findMostRecentDay())
-    const increasedDate = new Date(logToDate.getTime() + (24 * 60 * 60 * 1000))
-    picker.navigate(increasedDate)
+    const logToDate = new Date(userHydration.findMostRecentDay());
+    const increasedDate = new Date(logToDate.getTime() + (24 * 60 * 60 * 1000));
+    picker.navigate(increasedDate);
 }
 
 function displayDayInfo(location, amount, unit) {
@@ -319,14 +299,13 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
 };
 
 function getMotivationalQuote() {
-    const randomIndex = Math.floor(Math.random() * quotes.length)
-
-    return quotes[randomIndex]
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
 }
 
 function displayMotivationalQuote() {
-    motivationalQuote.innerHTML = ''
-    motivationalQuote.innerHTML = `<p>${getMotivationalQuote()}</p>`
+    motivationalQuote.innerHTML = '';
+    motivationalQuote.innerHTML = `<p>${getMotivationalQuote()}</p>`;
 }
 
 function findMotivationSelection() {
@@ -336,36 +315,18 @@ function findMotivationSelection() {
     return selection.value;
 }
 
-// Refactor updating welcome
-function createNewWelcome(firstName) {
-    let motivationLevel = findMotivationSelection()
+function createNewWelcome(firstName, welcomeType) {
+    console.log(welcomeType)
+    welcomeHeading.innerText = `${welcome[welcomeType].heading} ${firstName}!`;
+    welcomeText.innerText = `${welcome[welcomeType].text}`;
 
-    if (motivationLevel === 'stillInBed') {
-        welcomeHeading.innerText = `Wake-up ${firstName}!`;
-        welcomeText.innerText = `The world isn't going to conquer itself!`;
-
-    } else if (motivationLevel === 'cantEven') {
-        welcomeHeading.innerText = `Hustle up ${firstName}!`
-        welcomeText.innerText = `The worms won't catch themselves!`
-
-    } else if (motivationLevel === 'meh') {
-        welcomeHeading.innerText = `Watchout ${firstName}!`
-        welcomeText.innerText = `You are just warming up!`
-
-    } else if (motivationLevel === 'given100') {
-        welcomeHeading.innerText = `Buckle-up ${firstName}!`
-        welcomeText.innerText = `You are flying!`
-
-    } else if (motivationLevel === 'lfg') {
-        welcomeHeading.innerText = `${firstName}, you did it!`
-        welcomeText.innerText = `BEAST MODE ACTIVATED!`
+    if (welcomeType !== 'welcome') {
+        welcomeText.classList.remove('hidden');
     }
-
-    welcomeText.classList.remove('hidden')
 }
 
 function clearMotivationSelection() {
     motivationBtns.forEach((btn) => {
         btn.checked = false;
-    })
+    });
 }
