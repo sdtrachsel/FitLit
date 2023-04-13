@@ -1,5 +1,5 @@
 body {
-  background-color: #f1f1f1;
+  background-color: #f9f9f9;
   height: 100%;
   margin: 25px;
 }
@@ -82,8 +82,9 @@ h2 {
   padding: 12px;
 }
 
-.ounces-form,
-.motivation-form,
+form,
+.single,
+.double,
 .motivation-quote,
 .week-info,
 .day-info,
@@ -91,7 +92,7 @@ h2 {
   box-shadow: 0 4px 8px 0 rgba(36, 36, 36, 0.2), 0 6px 20px 0 rgba(36, 36, 36, 0.19);
 }
 
-.general-information {
+.summary-widget {
   height: 195px;
   margin-bottom: 10px;
   margin-top: 15px;
@@ -100,26 +101,29 @@ h2 {
   justify-content: space-between;
 }
 
-.motivation-form,
-.ounces-form {
+form {
   padding: 10px;
   color: #121212;
   display: flex;
   flex-direction: column;
+  width: 31%;
+  background-color: #f9f9f9;
 }
 
-.motivation-form-title,
-.ounces-form-title {
+legend {
+  text-align: center;
   width: 100%;
-  margin-bottom: 10px;
   margin-top: 10px;
+  padding-bottom: 1px;
   color: #121212;
   font-size: 20px;
+  font-weight: 600;
 }
 
-form {
-  height: 100%;
+fieldset {
+  border: none;
   display: flex;
+  margin-top: 10px;
   flex-direction: column;
 }
 
@@ -133,6 +137,8 @@ form {
   margin-left: 40px;
 }
 
+
+
 input[type=text],
 input[type=number] {
   width: 95px;
@@ -140,12 +146,17 @@ input[type=number] {
   margin-top: 10px;
 }
 
+input[type=number]:focus,
+input[type=text]:focus,
+input[type=number]:hover,
 input[type=text]:hover {
   cursor: pointer;
+  border: #0068ff 2px solid;
 }
 
-.motivation-form-title {
-  margin-bottom: 3px;
+input[type=radio]:focus,
+input[type=radio]:hover {
+  border: #0068ff 3px solid;
 }
 
 .form-feedback {
@@ -166,6 +177,13 @@ input[type=submit] {
   background-color: #f9f9f9;
 }
 
+input[type=submit]:hover,
+input[type=submit]:focus {
+  cursor: pointer;
+  color: #f9f9f9;
+  background-color: #0068ff;
+}
+
 .ounces-submit {
   margin-top: 15px;
 }
@@ -174,13 +192,7 @@ input[type=submit] {
   margin-top: 8px;
 }
 
-input[type=submit]:hover {
-  cursor: pointer;
-}
-
-.goals,
-.motivation-form,
-.ounces-form {
+.goals {
   width: 31%;
   background-color: #f9f9f9;
 }
@@ -287,18 +299,19 @@ td {
   text-align: center;
 }
 
-.double {
+.single,
+.double{
   margin: 5px;
   height: 150px;
-  width: 335px;
   border: #121212 2px solid;
 }
 
+.double {
+  width: 335px;
+}
+
 .single {
-  margin: 5px;
-  height: 150px;
   width: 150px;
-  border: #121212 2px solid;
 }
 
 .hidden {
