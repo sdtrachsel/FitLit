@@ -15,7 +15,8 @@
           <h1 id="welcomeHeading">Welcome</h1>
           <p class="welcome-text hidden" id="welcomeText"></p>
         </div>
-        <img class='logo' src="./images/gm-logo.png" alt="">
+        <img class='logo' src="./images/gm-logo.png"
+          alt="Glory Muscle Logo. Cartoon man with sunglasses flexes his arms">
       </section>
       <section class="user-info">
         <section class="demographics" id="userDemographics">
@@ -23,28 +24,29 @@
         </section>
       </section>
   </header>
-  <section class="general-information">
-    <section class="ounces-form" id="ouncesInput">
-      <form id="ouncesForm">
-        <h2 class="ounces-form-title">Log Your Ounces</h2>
+  <section class="summary-widget">
+    <form id="ouncesForm">
+      <fieldset>
+        <legend class="ounces-form-title">Log Your Ounces</legend>
         <div class="input-row">
-          <label  for="formLogDate" class="date-label">Date:</label>
-          <input class="date-input" type="text" id="formLogDate" name="date" required>
+          <label for="formLogDate" class="oz-label">Date:</label>
+          <input type="text" id="formLogDate" name="date" placeholder="MM/DD/YYYY" required>
         </div>
         <div class="input-row">
           <label for="formLogOunces">Ounces Drank:</label>
-          <input  type="number" id="formLogOunces" name="ounces" min="0" max="1000" class="ounces-input" required>
+          <input type="number" id="formLogOunces" name="ounces" min="0" max="1000" required>
         </div>
+        <p class="required">(all fields required)</p>
         <input class="ounces-submit" type="submit" value="Submit">
-        <p class="form-feedback" id="formFeedback"><!-- form feedback --></p>
-      </form>
-    </section>
+        <p class="form-feedback" id="formFeedback">Feeddback blah bha bha bha<!-- form feedback --></p>
+      </fieldset>
+    </form>
     <section class="goals" id="userGoals">
       <!-- user goals here -->
     </section>
-    <section class="motivation-form">
-      <form id="motivationForm">
-        <h2 class="motivation-form-title">How motivated are you?</h2>
+    <form id="motivationForm">
+      <fieldset>
+        <legend>How motivated are you?</legend>
         <div class="radio-row">
           <input type="radio" id="stillInBed" name="motivation-level" value="stillInBed">
           <label for="stillInBed" class="radio-label">It's noon and I'm in bed.</label>
@@ -66,8 +68,8 @@
           <label for="lfg" class="radio-label">Let's f***ing go!</label>
         </div>
         <input class="motivation-submit" type="submit" value="Submit" id="motivSubmit">
-      </form>
-    </section>
+      </fieldset>
+    </form>
   </section>
   </section>
   <section class="dashboard" id="dashboard">
@@ -87,7 +89,7 @@
       <!-- widgets here -->
     </section>
   </section>
- <script src="bundle.js"></script>
+  <script src="bundle.js"></script>
 </body>
 
 </html>

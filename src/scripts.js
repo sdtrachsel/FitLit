@@ -162,7 +162,7 @@ function formatFormSubDate(formDate) {
 }
 
 function validateOunceFormOz() {
-    const subOz = Number (ouncesFormOunces.value);
+    const subOz = Number(ouncesFormOunces.value);
 
     if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
         return true
@@ -176,21 +176,34 @@ function validateOunceFormDate() {
     const subDate = formatFormSubDate(ouncesFormDate.value)
     let loggedDates = userHydration.userHydrationLogs.map(log => log.date)
 
-// what if its not a date???
     if (!loggedDates.includes(subDate)) {
         return true
-    } else if(loggedDates.includes(subDate)) {
+    } else if (loggedDates.includes(subDate)) {
         displayFailureFeedback('logExists')
         return false
-    } 
+    }
+}
+
+function checkIsDate(dateSrting) {
+    const date = dateSrting.split('/')
+    let formDay = Number(date[1])
+    let formMonth = Number(date[0])
+    let formYear = Number(date[2])
+
+    if (formDay > 0 && formDay < 32 && formMonth > 0 && formMonth < 13 && formYear > 2000) {
+        return true
+    } else {
+        displayFailureFeedback('invalidDate')
+        return false
+    }
 }
 
 function submitOuncesForm() {
-    if (validateOunceFormDate() && validateOunceFormOz()) {
+    if (checkIsDate(ouncesFormDate.value) && validateOunceFormDate() && validateOunceFormOz()) {
         const newLog = {
             "userID": user.id,
             "date": formatFormSubDate(ouncesFormDate.value),
-            "numOunces": Number (ouncesFormOunces.value)
+            "numOunces": Number(ouncesFormOunces.value)
         }
 
         fetch('http://localhost:3001/api/v1/hydration', {
@@ -201,23 +214,26 @@ function submitOuncesForm() {
             }
         })
             .then((response) => {
-                return response.json()
-                //// Catch 422  
-                // if (response.ok) {
-                //     throw new Error(response)
-                // } else {}               
+                if (!response.ok) {
+                    throw new Error('other');
+                } else {
+                    return response.json();
+                }
             })
             .then(json => {
-                updateOuncesInformation(json)
-                displaySuccessFeedback()
-                resetForm()
+                updateOuncesInformation(json);
+                displaySuccessFeedback();
+                resetForm();
             })
             .catch(err => {
-                console.log(err)
-                displayFailureFeedback('other')
-                resetForm()
+                if (err.status === 422) {
+                    displayFailureFeedback('allFields');
+                } else {
+                    displayFailureFeedback('other');
+                }
+                resetForm();
             });
-    }
+    };
 }
 
 function updateOuncesInformation(data) {
@@ -232,6 +248,7 @@ function displaySuccessFeedback() {
 
 function displayFailureFeedback(type) {
     let failureFeedback = {
+        invalidDate: 'Please enter date as MM/DD/YYY',
         invalidOz: 'Ounces must be between 0 and 1000',
         logExists: 'You already logged ounces for that day',
         allFields: 'Please complete all fields',
@@ -246,7 +263,7 @@ function clearFormFeeback() {
 }
 
 function resetForm() {
-    console.log('hydration logs',userHydration.userHydrationLogs)
+    console.log('hydration logs', userHydration.userHydrationLogs)
     ouncesFormOunces.value = ''
     setFormDate()
     setTimeout(clearFormFeeback, 2000)
