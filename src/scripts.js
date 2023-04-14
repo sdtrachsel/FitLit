@@ -13,7 +13,7 @@ import User from './User';
 import Sleep from './Sleep';
 import Activity from './Activity';
 import Hydration from './Hydration';
-import quotes from './quotes';
+import motivations from './motivations';
 import feedback from './feedback';
 import welcome from './welcome';
 
@@ -54,7 +54,7 @@ ouncesForm.addEventListener('submit', (event) => {
 
 motivationForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    createNewWelcome(user.findFirstName(),findMotivationSelection())
+    createNewWelcome(user.findFirstName(), findMotivationSelection())
     clearMotivationSelection()
 })
 
@@ -71,7 +71,7 @@ window.addEventListener('load', () => {
 })
 
 function loadPage() {
-    createNewWelcome(user.findFirstName(),'welcome');
+    createNewWelcome(user.findFirstName(), 'welcome');
     setUserDisplay();
     setUserGoals();
     setFormDate();
@@ -92,7 +92,7 @@ function generateRowOneWidgets() {
     displayWeekInfo(dashboardRowOne, 'Step Goal Last 7 Days', userActivity.findStepGoalLastSevenDays(), 'goalMet');
     displayDayInfo(dashboardRowOne, userActivity.findMostRecentDay().minutesActive, 'Active Minutes');
     addImage(dashboardRowOne, './images/drink-water.png', 'Cartoon man drinking water', 'single');
-    displayDayInfo(dashboardRowOne, userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank');
+    displayDayInfo(dashboardRowOne, userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank', 'ozDay');
 };
 
 function generateRowTwoWidgets() {
@@ -100,7 +100,7 @@ function generateRowTwoWidgets() {
     displayDayInfo(dashboardRowTwo, userActivity.findMostRecentDay().numSteps, 'Steps');
     addImage(dashboardRowTwo, './images/steps.png', 'Cartoon man running really fast', 'single');
     displayDayInfo(dashboardRowTwo, userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles');
-    displayWeekInfo(dashboardRowTwo, 'Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces');
+    displayWeekInfo(dashboardRowTwo, 'Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces', 'ozWeek');
 };
 
 function genterateRowThreeWidgets() {
@@ -209,7 +209,7 @@ function submitOuncesForm() {
                 }
             })
             .then(json => {
-                updateOuncesInformation(json);
+                updateOuncesInformation();
                 displayFormFeedback('success');
                 resetForm();
             })
@@ -224,10 +224,18 @@ function submitOuncesForm() {
     };
 };
 
-function updateOuncesInformation(data) {
-    userHydration.userHydrationLogs.push(data);
-    generateRowOneWidgets();
-    generateRowTwoWidgets();
+function updateOuncesInformation() {
+    fetch('http://localhost:3001/api/v1/hydration')
+        .then(response => response.json())
+        .then((data) => {
+            const newLogs = data.hydrationData.filter(log => log.userID === user.id)
+            userHydration.userHydrationLogs = newLogs;
+            generateRowOneWidgets();
+            generateRowTwoWidgets();
+            addTempStyle('ozWeek', 'highlight');
+            addTempStyle('ozDay', 'highlight');
+        })
+        .catch(err => displayFormFeedback('other'));
 };
 
 function displayFormFeedback(type) {
@@ -251,24 +259,31 @@ function setFormDate() {
     picker.navigate(increasedDate);
 };
 
-function displayDayInfo(location, amount, unit) {
+function displayDayInfo(location, amount, unit, optId) {
+    let divID;
+    if (!optId) {
+        divID = '';
+     } else {
+        divID = ` id= ${optId}`;
+    }
+    
     location.innerHTML += `
-    <section class="day-info">
+    <section class="day-info"${divID}>
         <h2>${unit}</h2>
         <p>${amount}</p>
     </section>`;
 };
 
-function addImage(location, image, altText, stylingClass) {
-    location.innerHTML += `
-    <section>
-        <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}" >
-    </section>`;
-};
+function displayWeekInfo(location, title, dataList, dataDetail, optId) {
+    let divID;
+    if (!optId) {
+        divID = '';
+     } else {
+        divID = optId;
+    }
 
-function displayWeekInfo(location, title, dataList, dataDetail) {
     location.innerHTML += `
-        <section class="week-info">
+        <section class="week-info" id=${optId}>
             <h2>${title}</h2>
             <table>
                 <tr class="date-heading">
@@ -293,9 +308,16 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
         </section>`;
 };
 
+function addImage(location, image, altText, stylingClass) {
+    location.innerHTML += `
+    <section>
+        <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}" >
+    </section>`;
+};
+
 function getMotivationalQuote() {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    return quotes[randomIndex];
+    const randomIndex = Math.floor(Math.random() * motivations.length);
+    return motivations[randomIndex];
 };
 
 function displayMotivationalQuote() {
@@ -316,8 +338,26 @@ function createNewWelcome(firstName, welcomeType) {
 
     if (welcomeType !== 'welcome') {
         welcomeText.classList.remove('hidden');
+    } else {
+        welcomeText.classList.add('hidden');
     };
 };
+
+function addTempStyle (elId, styClass){
+    const element = document.getElementById(elId);
+
+    element.classList.add(styClass);
+
+    setTimeout(()=>{
+        removeStyle(elId, styClass);
+    }, 3000);
+    
+}
+
+function removeStyle(elId, styClass) {
+    const element = document.getElementById(elId);
+    element.classList.remove(styClass);
+}
 
 function clearMotivationSelection() {
     motivationBtns.forEach((btn) => {

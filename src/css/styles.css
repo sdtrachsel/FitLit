@@ -145,11 +145,6 @@ legend {
   width: 75%;
 }
 
-.oz-label {
-  padding-left: 25px;
-  margin-left: 40px;
-}
-
 input[type=text],
 input[type=number] {
   width: 95px;
@@ -257,6 +252,36 @@ input[type=radio] {
   justify-content: space-between;
 }
 
+.highlight {
+  position: relative;
+}
+
+.highlight::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #0068ff; 
+  border-radius: 10px; 
+  animation: border-animation 2s linear infinite;
+}
+
+@keyframes border-animation {
+  0%, 100% {
+    box-shadow: 0 0 0 0 #0068ff;
+  }
+  25% {
+    box-shadow: 0 0 0 2px #0068ff;
+  }
+  50% {
+    box-shadow: 0 0 0 4px #0068ff;
+  }
+  75% {
+    box-shadow: 0 0 0 6px #0068ff;
+  }
+}
 .week-info,
 .day-info {
   background-color: #f9f9f9;
