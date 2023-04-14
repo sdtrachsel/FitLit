@@ -71,7 +71,7 @@ window.addEventListener('load', () => {
 })
 
 function loadPage() {
-    setWelcome();
+    createNewWelcome(user.findFirstName(),'welcome');
     setUserDisplay();
     setUserGoals();
     setFormDate();
@@ -93,7 +93,7 @@ function generateRowOneWidgets() {
     displayDayInfo(dashboardRowOne, userActivity.findMostRecentDay().minutesActive, 'Active Minutes');
     addImage(dashboardRowOne, './images/drink-water.png', 'Cartoon man drinking water', 'single');
     displayDayInfo(dashboardRowOne, userHydration.findOuncesByDay(userHydration.findMostRecentDay()), 'Ounces Drank');
-}
+};
 
 function generateRowTwoWidgets() {
     dashboardRowTwo.innerHTML = ''
@@ -101,7 +101,7 @@ function generateRowTwoWidgets() {
     addImage(dashboardRowTwo, './images/steps.png', 'Cartoon man running really fast', 'single');
     displayDayInfo(dashboardRowTwo, userActivity.calculateMilesPerDay(userActivity.findMostRecentDay().date), 'Miles');
     displayWeekInfo(dashboardRowTwo, 'Ounces Last 7 Days', userHydration.findOuncesLastSevenDays(), 'numOunces');
-}
+};
 
 function genterateRowThreeWidgets() {
     dashboardRowThree.innerHTML = ''
@@ -109,7 +109,7 @@ function genterateRowThreeWidgets() {
     displayWeekInfo(dashboardRowThree, 'Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept');
     displayDayInfo(dashboardRowThree, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept');
     addImage(dashboardRowThree, './images/wake-up.png', 'Cartoon man happy to be awake', 'single');
-}
+};
 
 function genterateRowFourWidgets() {
     dashboardRowFour.innerHTML = ''
@@ -117,11 +117,6 @@ function genterateRowFourWidgets() {
     addImage(dashboardRowFour, './images/push-up.png', 'Cartoon man doing push-ups', 'double');
     displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality');
 
-}
-
-function setWelcome() {
-    welcomeText.classList.add('hidden')
-    welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`;
 };
 
 function setUserDisplay() {
@@ -135,7 +130,7 @@ function setUserGoals() {
     userGoalsDisplay.innerHTML = `
     <p>Stride length: ${user.strideLength}</p>
     <p>Step Goal: ${user.dailyStepGoal}</p>`;
-}
+};
 
 function formatFormSubDate(formDate) {
     const date = formDate.split('/');
@@ -152,7 +147,7 @@ function formatFormSubDate(formDate) {
     };
 
     return (`${formYear}/${formMonth}/${formDay}`);
-}
+};
 
 function validateOunceFormOz() {
     const subOz = Number(ouncesFormOunces.value);
@@ -163,7 +158,7 @@ function validateOunceFormOz() {
         displayFormFeedback('invalidOz');
         return false;
     };
-}
+};
 
 function validateOunceFormDate() {
     const subDate = formatFormSubDate(ouncesFormDate.value);
@@ -175,7 +170,7 @@ function validateOunceFormDate() {
         displayFormFeedback('logExists');
         return false;
     }
-}
+};
 
 function checkIsDate(dateSrting) {
     const date = dateSrting.split('/');
@@ -189,7 +184,7 @@ function checkIsDate(dateSrting) {
         displayFormFeedback('invalidDate');
         return false;
     }
-}
+};
 
 function submitOuncesForm() {
     if (checkIsDate(ouncesFormDate.value) && validateOunceFormDate() && validateOunceFormOz()) {
@@ -227,34 +222,34 @@ function submitOuncesForm() {
                 resetForm();
             });
     };
-}
+};
 
 function updateOuncesInformation(data) {
     userHydration.userHydrationLogs.push(data);
     generateRowOneWidgets();
     generateRowTwoWidgets();
-}
+};
 
 function displayFormFeedback(type) {
     formFeedback.innerText = `${feedback[type]}`;
-}
+};
 
 function clearFormFeeback() {
     formFeedback.innerHTML = '';
-}
+};
 
 function resetForm() {
     ouncesFormOunces.value = '';
     setFormDate();
     setTimeout(clearFormFeeback, 3000);
-}
+};
 
 function setFormDate() {
     ouncesFormDate.value = '';
     const logToDate = new Date(userHydration.findMostRecentDay());
     const increasedDate = new Date(logToDate.getTime() + (24 * 60 * 60 * 1000));
     picker.navigate(increasedDate);
-}
+};
 
 function displayDayInfo(location, amount, unit) {
     location.innerHTML += `
@@ -301,32 +296,31 @@ function displayWeekInfo(location, title, dataList, dataDetail) {
 function getMotivationalQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     return quotes[randomIndex];
-}
+};
 
 function displayMotivationalQuote() {
     motivationalQuote.innerHTML = '';
     motivationalQuote.innerHTML = `<p>${getMotivationalQuote()}</p>`;
-}
+};
 
 function findMotivationSelection() {
     const selection = Array.from(motivationBtns).find(btn => {
         return btn.checked === true;
     })
     return selection.value;
-}
+};
 
 function createNewWelcome(firstName, welcomeType) {
-    console.log(welcomeType)
     welcomeHeading.innerText = `${welcome[welcomeType].heading} ${firstName}!`;
     welcomeText.innerText = `${welcome[welcomeType].text}`;
 
     if (welcomeType !== 'welcome') {
         welcomeText.classList.remove('hidden');
-    }
-}
+    };
+};
 
 function clearMotivationSelection() {
     motivationBtns.forEach((btn) => {
         btn.checked = false;
     });
-}
+};
