@@ -270,9 +270,6 @@ input[type=radio] {
   justify-content: space-between;
 }
 
-*{
-  border: red 1px solid;
-}
 .motivation-quote {
   height: 40px;
   width: 100%;

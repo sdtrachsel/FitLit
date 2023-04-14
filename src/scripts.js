@@ -76,7 +76,7 @@ window.addEventListener('load', () => {
 })
 
 function loadPage() {
-    welcomeHeading.innerText = `Welcome${user.findFirstName()}!`
+    welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`
     welcomeText.classList.add('hidden')
     setUserDisplay();
     setUserGoals();
@@ -360,7 +360,7 @@ function addTempStyle(elId, styClass) {
 
     setTimeout(() => {
         removeStyle(elId, styClass);
-    }, 3000);
+    }, 4000);
 
 }
 

@@ -5,9 +5,9 @@ const motivations = [
     'Researchers found walking 1,000 additional steps per day lowered the risk of premature death from heart disease, stroke and all other causes.\nJust a few more past the tv.',
     'Baby steps, partner.\nJust 30 minutes of activity every day can increase cardiovascular fitness, strengthen bones, reduce excess body fat, and boost muscle power and endurance. ',
     'Fight those cheat days!\nStudies indicate that walking reduces symptoms of depression. And it may help with anxiety and loneliness. And there\'s no co-pay.',
-    '********Being active boosts high-density lipoprotein (HDL) cholesterol, the "good" cholesterol, and it decreases unhealthy triglycerides.',
+    'Balance out that app from last night.\nBeing active boosts high-density lipoprotein (HDL) cholesterol, the "good" cholesterol, and it decreases unhealthy triglycerides.',
     'Quality sleep promotes cardiac health. During sleep, heart rate slows down, and blood pressure decreases.\nPlus the dreams are nice!',
-    '******Sleeping seven hours or more each night helps ensure blood sugar is regulated in the body.',
+    'Sleeping seven hours or more each night helps ensure blood sugar is regulated in the body.\n Don\t be like Wilford Brimley.',
     'You make enough bad choices.\nA sleep-deprived person is at higher risk of making poor decisions because they only have the ability to focus on a desired outcome, not the consequences. ',
     ' The ZZZs help the knees!\nSleep is a key element of athletic recovery, and the body\'s production of growth hormones is highest during sleep.'
 ]

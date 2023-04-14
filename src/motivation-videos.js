@@ -30,4 +30,5 @@ const motivationVideos = {
         video: '<iframe src="https://www.youtube.com/embed/o1tj2zJ2Wvg?start=35&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
     }
 }
+
 export default motivationVideos;
