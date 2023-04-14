@@ -4,6 +4,22 @@ body {
   margin: 25px;
 }
 
+h2,
+th,
+td,
+p {
+  color: #121212;
+}
+
+h2 {
+  width: 100%;
+  text-align: center;
+  align-self: center;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 5px;
+}
+
 .greeting {
   height: 125px;
   display: flex;
@@ -43,22 +59,6 @@ h1 {
   text-align: left;
 }
 
-h2,
-th,
-td,
-p {
-  color: #121212;
-}
-
-h2 {
-  width: 100%;
-  text-align: center;
-  align-self: center;
-  font-size: 20px;
-  font-weight: 400;
-  margin: 5px;
-}
-
 .goals,
 .demographics {
   display: flex;
@@ -82,6 +82,15 @@ h2 {
   padding: 12px;
 }
 
+.summary-widget {
+  height: 210px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 form,
 .single,
 .double,
@@ -97,15 +106,6 @@ form,
   background-color: #f9f9f9;
 }
 
-.summary-widget {
-  height: 210px;
-  margin-bottom: 10px;
-  margin-top: 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 form {
   padding: 10px;
   color: #121212;
@@ -113,6 +113,13 @@ form {
   flex-direction: column;
   width: 31%;
   background-color: #f9f9f9;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
 }
 
 legend {
@@ -123,13 +130,6 @@ legend {
   color: #121212;
   font-size: 20px;
   font-weight: 600;
-}
-
-fieldset {
-  border: none;
-  display: flex;
-  margin-top: 10px;
-  flex-direction: column;
 }
 
 .required{
@@ -145,13 +145,6 @@ fieldset {
   width: 75%;
 }
 
-.oz-label {
-  padding-left: 25px;
-  margin-left: 40px;
-}
-
-
-
 input[type=text],
 input[type=number] {
   width: 95px;
@@ -165,11 +158,6 @@ input[type=number]:hover,
 input[type=text]:hover {
   cursor: pointer;
   border: #0068ff 2px solid;
-}
-
-input[type=radio]:focus,
-input[type=radio]:hover {
-  border: #0068ff 3px solid;
 }
 
 .form-feedback {
@@ -264,6 +252,36 @@ input[type=radio] {
   justify-content: space-between;
 }
 
+.highlight {
+  position: relative;
+}
+
+.highlight::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #0068ff; 
+  border-radius: 10px; 
+  animation: border-animation 2s linear infinite;
+}
+
+@keyframes border-animation {
+  0%, 100% {
+    box-shadow: 0 0 0 0 #0068ff;
+  }
+  25% {
+    box-shadow: 0 0 0 2px #0068ff;
+  }
+  50% {
+    box-shadow: 0 0 0 4px #0068ff;
+  }
+  75% {
+    box-shadow: 0 0 0 6px #0068ff;
+  }
+}
 .week-info,
 .day-info {
   background-color: #f9f9f9;
@@ -294,6 +312,21 @@ input[type=radio] {
   align-items: center;
 }
 
+.single,
+.double{
+  margin: 5px;
+  height: 150px;
+  border: #121212 2px solid;
+}
+
+.double {
+  width: 335px;
+}
+
+.single {
+  width: 150px;
+}
+
 table {
   width: 450px;
   height: 80px;
@@ -311,21 +344,6 @@ th {
 
 td {
   text-align: center;
-}
-
-.single,
-.double{
-  margin: 5px;
-  height: 150px;
-  border: #121212 2px solid;
-}
-
-.double {
-  width: 335px;
-}
-
-.single {
-  width: 150px;
 }
 
 .hidden {
