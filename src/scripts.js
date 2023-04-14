@@ -208,7 +208,7 @@ function submitOuncesForm() {
         })
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error('other');
+                    throw new Error(response.status);
                 } else {
                     return response.json();
                 }
@@ -219,7 +219,7 @@ function submitOuncesForm() {
                 resetForm();
             })
             .catch(err => {
-                if (err.status === 422) {
+                if (err === 422) {
                     displayFormFeedback('allFields');
                 } else {
                     displayFormFeedback('other');
@@ -231,7 +231,13 @@ function submitOuncesForm() {
 
 function updateOuncesInformation() {
     fetch('http://localhost:3001/api/v1/hydration')
-        .then(response => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.status)
+            } else {
+                response.json()
+            }
+        })
         .then((data) => {
             const newLogs = data.hydrationData.filter(log => log.userID === user.id)
             userHydration.userHydrationLogs = newLogs;
