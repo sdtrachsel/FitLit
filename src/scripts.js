@@ -15,7 +15,7 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import motivations from './motivations';
 import feedback from './feedback';
-import welcome from './welcome';
+import motivationVideos from './motivation-videos';
 
 let allUsers;
 let user;
@@ -35,6 +35,9 @@ const dashboardRowThree = document.getElementById('rowThree');
 const dashboardRowFour = document.getElementById('rowFour');
 const motivationForm = document.getElementById('motivationForm')
 const motivationBtns = document.getElementsByName('motivation-level')
+const montivationVideo = document.getElementById('videoHolder')
+const motivationVideoDisplay = document.getElementById('motivationVideo')
+const closeVideoDisplay = document.getElementById('closeVideo')
 const ouncesForm = document.getElementById('ouncesForm')
 const ouncesFormDate = document.getElementById('formLogDate')
 const ouncesFormOunces = document.getElementById('formLogOunces')
@@ -54,9 +57,11 @@ ouncesForm.addEventListener('submit', (event) => {
 
 motivationForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    createNewWelcome(user.findFirstName(), findMotivationSelection())
+    displayMoitivationResult(user.findFirstName(), findMotivationSelection())
     clearMotivationSelection()
 })
+
+closeVideoDisplay.addEventListener('click', stopVideo)
 
 window.addEventListener('load', () => {
     fetchAllData()
@@ -71,7 +76,8 @@ window.addEventListener('load', () => {
 })
 
 function loadPage() {
-    createNewWelcome(user.findFirstName(), 'welcome');
+    welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`
+    welcomeText.classList.add('hidden')
     setUserDisplay();
     setUserGoals();
     setFormDate();
@@ -84,7 +90,6 @@ function generateAllWidgets() {
     generateRowTwoWidgets()
     genterateRowThreeWidgets()
     genterateRowFourWidgets()
-
 };
 
 function generateRowOneWidgets() {
@@ -263,10 +268,10 @@ function displayDayInfo(location, amount, unit, optId) {
     let divID;
     if (!optId) {
         divID = '';
-     } else {
+    } else {
         divID = ` id= ${optId}`;
     }
-    
+
     location.innerHTML += `
     <section class="day-info"${divID}>
         <h2>${unit}</h2>
@@ -275,15 +280,15 @@ function displayDayInfo(location, amount, unit, optId) {
 };
 
 function displayWeekInfo(location, title, dataList, dataDetail, optId) {
-    let divID;
+    let divId;
     if (!optId) {
-        divID = '';
-     } else {
-        divID = optId;
+        divId = '';
+    } else {
+        divId = optId;
     }
 
     location.innerHTML += `
-        <section class="week-info" id=${optId}>
+        <section class="week-info" id=${divId}>
             <h2>${title}</h2>
             <table>
                 <tr class="date-heading">
@@ -322,7 +327,7 @@ function getMotivationalQuote() {
 
 function displayMotivationalQuote() {
     motivationalQuote.innerHTML = '';
-    motivationalQuote.innerHTML = `<p>${getMotivationalQuote()}</p>`;
+    motivationalQuote.innerHTML = `<p class="quote">${getMotivationalQuote()}</p>`;
 };
 
 function findMotivationSelection() {
@@ -332,26 +337,31 @@ function findMotivationSelection() {
     return selection.value;
 };
 
-function createNewWelcome(firstName, welcomeType) {
-    welcomeHeading.innerText = `${welcome[welcomeType].heading} ${firstName}!`;
-    welcomeText.innerText = `${welcome[welcomeType].text}`;
+function displayMoitivationResult(firstName, motivationType) {
+    welcomeHeading.innerText = `${motivationVideos[motivationType].heading} ${firstName}!`;
+    welcomeText.innerText = `${motivationVideos[motivationType].text}`;
+    montivationVideo.innerHTML = motivationVideos[motivationType].video;
 
-    if (welcomeType !== 'welcome') {
-        welcomeText.classList.remove('hidden');
-    } else {
-        welcomeText.classList.add('hidden');
-    };
+    welcomeText.classList.remove('hidden');
+    userGoalsDisplay.classList.add('hidden');
+    motivationVideoDisplay.classList.remove('hidden');
 };
 
-function addTempStyle (elId, styClass){
+function stopVideo() {
+    montivationVideo.innerHTML = '';
+    userGoalsDisplay.classList.remove('hidden')
+    motivationVideoDisplay.classList.add('hidden')
+}
+
+function addTempStyle(elId, styClass) {
     const element = document.getElementById(elId);
 
     element.classList.add(styClass);
 
-    setTimeout(()=>{
+    setTimeout(() => {
         removeStyle(elId, styClass);
-    }, 3000);
-    
+    }, 4000);
+
 }
 
 function removeStyle(elId, styClass) {

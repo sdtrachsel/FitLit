@@ -59,6 +59,7 @@ h1 {
   text-align: left;
 }
 
+.motivation-display,
 .goals,
 .demographics {
   display: flex;
@@ -97,13 +98,52 @@ form,
 .motivation-quote,
 .week-info,
 .day-info,
+.motivation-display,
 .goals {
   box-shadow: 0 4px 8px 0 rgba(36, 36, 36, 0.2), 0 6px 20px 0 rgba(36, 36, 36, 0.19);
 }
 
+.motivation-display,
 .goals {
   width: 31%;
   background-color: #f9f9f9;
+}
+
+.motivation-display {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+.video-holder {
+  width: 95%;
+  height: 95%;
+  align-self: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.close-video {
+  border: blue 1px solid;
+  background-color: #f9f9f9;
+  align-self: flex-end;
+  margin: 5px;
+  height: 20px;
+  width: 25px;
+}
+
+.close-video:hover,
+.close-video:focus {
+  cursor: pointer;
+  border: red 1px solid;
+  background-color: red;
+  color: white;
+}
+
+iframe {
+  align-self: center;
+  width: 95%;
+  height: 95%;
 }
 
 form {
@@ -132,7 +172,7 @@ legend {
   font-weight: 600;
 }
 
-.required{
+.required {
   text-align: center;
   width: 100%;
   padding: 0px;
@@ -193,7 +233,7 @@ input[type=submit]:focus {
   margin-top: 8px;
 }
 
-.radio-row{
+.radio-row {
   display: flex;
 }
 
@@ -231,11 +271,19 @@ input[type=radio] {
 }
 
 .motivation-quote {
-  height: 50px;
+  height: 40px;
   width: 100%;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  padding: 20px;
+  margin: 10px 0px 10px 0px;
   background-color: black;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.quote {
+  white-space: pre-line;
+  align-self: center;
 }
 
 .motivation-quote p {
@@ -263,25 +311,31 @@ input[type=radio] {
   left: -2px;
   right: -2px;
   bottom: -2px;
-  border: 2px solid #0068ff; 
-  border-radius: 10px; 
+  border: 2px solid #0068ff;
+  border-radius: 10px;
   animation: border-animation 2s linear infinite;
 }
 
 @keyframes border-animation {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 0 0 #0068ff;
   }
+
   25% {
     box-shadow: 0 0 0 2px #0068ff;
   }
+
   50% {
     box-shadow: 0 0 0 4px #0068ff;
   }
+
   75% {
     box-shadow: 0 0 0 6px #0068ff;
   }
 }
+
 .week-info,
 .day-info {
   background-color: #f9f9f9;
@@ -313,7 +367,7 @@ input[type=radio] {
 }
 
 .single,
-.double{
+.double {
   margin: 5px;
   height: 150px;
   border: #121212 2px solid;

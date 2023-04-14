@@ -29,7 +29,7 @@
       <fieldset>
         <legend class="ounces-form-title">Log Your Ounces</legend>
         <div class="input-row">
-          <label for="formLogDate">Date:</label>
+          <label for="formLogDate" autocomplete="off">Date:</label>
           <input type="text" id="formLogDate" name="date" placeholder="MM/DD/YYYY" required>
         </div>
         <div class="input-row">
@@ -41,7 +41,13 @@
         <p class="form-feedback" id="formFeedback"><!-- form feedback --></p>
       </fieldset>
     </form>
-    <section class="goals" id="userGoals">
+    <section class="motivation-display hidden" id="motivationVideo">     
+        <button class="close-video" id="closeVideo" type="button">X</button>
+        <div class="video-holder" id="videoHolder">
+          <!-- video here -->
+        </div>
+    </section>
+    <section class="goals" id="userGoals" >
       <!-- user goals here -->
     </section>
     <form id="motivationForm">
