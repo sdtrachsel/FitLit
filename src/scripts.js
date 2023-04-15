@@ -7,7 +7,7 @@ import './images/wake-up.png';
 import './images/push-up.png';
 import './images/gm-logo.png';
 import datepicker from 'js-datepicker'
-import { fetchAllData } from './apiCalls';
+import { fetchAllData, postHydrationInfo } from './apiCalls';
 import UserRepository from './UserRepository';
 import User from './User';
 import Sleep from './Sleep';
@@ -25,43 +25,43 @@ let userActivity;
 
 // Selectors
 const welcomeHeading = document.getElementById('welcomeHeading');
-const welcomeText = document.getElementById('welcomeText')
-const userDemographicsDisplay = document.getElementById('userDemographics')
-const userGoalsDisplay = document.getElementById('userGoals')
-const motivationalQuote = document.getElementById('motivationalQuote')
+const welcomeText = document.getElementById('welcomeText');
+const userDemographicsDisplay = document.getElementById('userDemographics');
+const userGoalsDisplay = document.getElementById('userGoals');
+const motivationalQuote = document.getElementById('motivationalQuote');
 const dashboardRowOne = document.getElementById('rowOne');
 const dashboardRowTwo = document.getElementById('rowTwo');
 const dashboardRowThree = document.getElementById('rowThree');
 const dashboardRowFour = document.getElementById('rowFour');
-const motivationForm = document.getElementById('motivationForm')
-const motivationBtns = document.getElementsByName('motivation-level')
+const motivationForm = document.getElementById('motivationForm');
+const motivationBtns = document.getElementsByName('motivation-level');
 const montivationVideo = document.getElementById('videoHolder')
-const motivationVideoDisplay = document.getElementById('motivationVideo')
-const closeVideoDisplay = document.getElementById('closeVideo')
-const ouncesForm = document.getElementById('ouncesForm')
-const ouncesFormDate = document.getElementById('formLogDate')
-const ouncesFormOunces = document.getElementById('formLogOunces')
-const formFeedback = document.getElementById('formFeedback')
+const motivationVideoDisplay = document.getElementById('motivationVideo');
+const closeVideoDisplay = document.getElementById('closeVideo');
+const ouncesForm = document.getElementById('ouncesForm');
+const ouncesFormDate = document.getElementById('formLogDate');
+const ouncesFormOunces = document.getElementById('formLogOunces');
+const formFeedback = document.getElementById('formFeedback');
 const picker = datepicker(ouncesFormDate, {
     formatter: (input, date) => {
-        const value = date.toLocaleDateString()
-        input.value = value
+        const value = date.toLocaleDateString();
+        input.value = value;
     }
 });
 
 // Event Listeners
 ouncesForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    submitOuncesForm()
+    submitOuncesForm();
 });
 
 motivationForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    displayMoitivationResult(user.findFirstName(), findMotivationSelection())
-    clearMotivationSelection()
-})
+    displayMoitivationResult(user.findFirstName(), findMotivationSelection());
+    clearMotivationSelection();
+});
 
-closeVideoDisplay.addEventListener('click', stopVideo)
+closeVideoDisplay.addEventListener('click', stopVideo);
 
 window.addEventListener('load', () => {
     fetchAllData()
@@ -73,11 +73,11 @@ window.addEventListener('load', () => {
             userActivity = new Activity(allUsers.findUserById(user.id), data[3]);
             loadPage();
         })
-})
+});
 
 function loadPage() {
-    welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`
-    welcomeText.classList.add('hidden')
+    welcomeHeading.innerText = `Welcome ${user.findFirstName()}!`;
+    welcomeText.classList.add('hidden');
     setUserDisplay();
     setUserGoals();
     setFormDate();
@@ -86,10 +86,10 @@ function loadPage() {
 }
 
 function generateAllWidgets() {
-    generateRowOneWidgets()
-    generateRowTwoWidgets()
-    genterateRowThreeWidgets()
-    genterateRowFourWidgets()
+    generateRowOneWidgets();
+    generateRowTwoWidgets();
+    genterateRowThreeWidgets();
+    genterateRowFourWidgets();
 };
 
 function generateRowOneWidgets() {
@@ -110,14 +110,14 @@ function generateRowTwoWidgets() {
 
 function genterateRowThreeWidgets() {
     dashboardRowThree.innerHTML = ''
-    addImage(dashboardRowThree, './images/running.png', 'Cartoon man going up steps', 'single')
+    addImage(dashboardRowThree, './images/running.png', 'Cartoon man going up steps', 'single');
     displayWeekInfo(dashboardRowThree, 'Hours Slept Last 7 Days', userSleep.findDetailByWeek('hoursSlept'), 'hoursSlept');
     displayDayInfo(dashboardRowThree, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'hoursSlept'), 'Hours Slept');
     addImage(dashboardRowThree, './images/wake-up.png', 'Cartoon man happy to be awake', 'single');
 };
 
 function genterateRowFourWidgets() {
-    dashboardRowFour.innerHTML = ''
+    dashboardRowFour.innerHTML = '';
     displayDayInfo(dashboardRowFour, userSleep.findDetailByDay(userSleep.findMostRecentDay(), 'sleepQuality'), 'Sleep Quality');
     addImage(dashboardRowFour, './images/push-up.png', 'Cartoon man doing push-ups', 'double');
     displayWeekInfo(dashboardRowFour, 'Sleep Quality Last 7 Days', userSleep.findDetailByWeek('sleepQuality'), 'sleepQuality');
@@ -128,13 +128,53 @@ function setUserDisplay() {
     userDemographicsDisplay.innerHTML = `
          <p>${user.name}</p>
         <p>${user.address}</p>
-        <p>${user.email}</p>`;
+        <p>${user.email}</p>
+        `;
 };
 
 function setUserGoals() {
     userGoalsDisplay.innerHTML = `
     <p>Stride length: ${user.strideLength}</p>
-    <p>Step Goal: ${user.dailyStepGoal}</p>`;
+    <p>Step Goal: ${user.dailyStepGoal}</p>
+    `;
+};
+
+function validateOunceFormOz() {
+    const subOz = Number(ouncesFormOunces.value);
+
+    if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
+        return true;
+    } else {
+        displayFormFeedback('invalidOz');
+        return false;
+    };
+};
+
+function validateOunceFormDate() {
+    const subDate = formatFormSubDate(ouncesFormDate.value);
+    const loggedDates = userHydration.userHydrationLogs.map(log => log.date);
+    const date = new Date(subDate);
+
+    if (loggedDates.includes(subDate)) {
+        displayFormFeedback('logExists');
+        return false;
+    } else if (date.getTime() < Date.parse('2023/01/01')) {
+        displayFormFeedback('tooEarly');
+        return false;
+    } else {
+        return true;
+    }
+};
+
+function checkIsDate(dateString) {
+    const date = Date.parse(dateString);
+
+    if (date) {
+        return true;
+    } else {
+        displayFormFeedback('invalidDate');
+        return false;
+    }
 };
 
 function formatFormSubDate(formDate) {
@@ -154,94 +194,25 @@ function formatFormSubDate(formDate) {
     return (`${formYear}/${formMonth}/${formDay}`);
 };
 
-function validateOunceFormOz() {
-    const subOz = Number(ouncesFormOunces.value);
-
-    if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
-        return true;
-    } else {
-        displayFormFeedback('invalidOz');
-        return false;
-    };
-};
-
-function validateOunceFormDate() {
-    const subDate = formatFormSubDate(ouncesFormDate.value);
-    let loggedDates = userHydration.userHydrationLogs.map(log => log.date);
-
-    if (!loggedDates.includes(subDate)) {
-        return true;
-    } else if (loggedDates.includes(subDate)) {
-        displayFormFeedback('logExists');
-        return false;
-    }
-};
-
-function checkIsDate(dateSrting) {
-    const date = dateSrting.split('/');
-    let formDay = Number(date[1]);
-    let formMonth = Number(date[0]);
-    let formYear = Number(date[2]);
-
-    if (formDay > 0 && formDay < 32 && formMonth > 0 && formMonth < 13 && formYear > 2000) {
-        return true;
-    } else {
-        displayFormFeedback('invalidDate');
-        return false;
-    }
-};
-
 function submitOuncesForm() {
     if (checkIsDate(ouncesFormDate.value) && validateOunceFormDate() && validateOunceFormOz()) {
-        const newLog = {
+        var newLog = {
             "userID": user.id,
             "date": formatFormSubDate(ouncesFormDate.value),
             "numOunces": Number(ouncesFormOunces.value)
-        }
-
-        fetch('http://localhost:3001/api/v1/hydration', {
-            method: 'POST',
-            body: JSON.stringify(newLog),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('other');
-                } else {
-                    return response.json();
-                }
-            })
-            .then(json => {
-                updateOuncesInformation();
-                displayFormFeedback('success');
-                resetForm();
-            })
-            .catch(err => {
-                if (err.status === 422) {
-                    displayFormFeedback('allFields');
-                } else {
-                    displayFormFeedback('other');
-                }
-                resetForm();
-            });
+        };
+        postHydrationInfo(newLog, assignNewHydrationLogs, displayFormFeedback, resetForm);
     };
 };
 
-function updateOuncesInformation() {
-    fetch('http://localhost:3001/api/v1/hydration')
-        .then(response => response.json())
-        .then((data) => {
-            const newLogs = data.hydrationData.filter(log => log.userID === user.id)
-            userHydration.userHydrationLogs = newLogs;
-            generateRowOneWidgets();
-            generateRowTwoWidgets();
-            addTempStyle('ozWeek', 'highlight');
-            addTempStyle('ozDay', 'highlight');
-        })
-        .catch(err => displayFormFeedback('other'));
-};
+function assignNewHydrationLogs(log) {
+    userHydration.userHydrationLogs.push(log);
+    userHydration.userHydrationLogs.sort((a, b) => new Date(a.date) - new Date(b.date));
+    generateRowOneWidgets();
+    generateRowTwoWidgets();
+    addTempStyle('ozWeek', 'highlight');
+    addTempStyle('ozDay', 'highlight');
+}
 
 function displayFormFeedback(type) {
     formFeedback.innerText = `${feedback[type]}`;
@@ -270,13 +241,14 @@ function displayDayInfo(location, amount, unit, optId) {
         divID = '';
     } else {
         divID = ` id= ${optId}`;
-    }
+    };
 
     location.innerHTML += `
     <section class="day-info"${divID}>
         <h2>${unit}</h2>
         <p>${amount}</p>
-    </section>`;
+    </section>
+    `;
 };
 
 function displayWeekInfo(location, title, dataList, dataDetail, optId) {
@@ -310,14 +282,16 @@ function displayWeekInfo(location, title, dataList, dataDetail, optId) {
                     <td>${dataList[6][dataDetail]}</td>
                 </tr>
             </table>
-        </section>`;
+        </section>
+        `;
 };
 
 function addImage(location, image, altText, stylingClass) {
     location.innerHTML += `
     <section>
-        <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}" >
-    </section>`;
+        <image src="${image}" alt="${altText}" class= "dashboard-image ${stylingClass}">
+    </section>
+    `;
 };
 
 function getMotivationalQuote() {
@@ -349,8 +323,8 @@ function displayMoitivationResult(firstName, motivationType) {
 
 function stopVideo() {
     montivationVideo.innerHTML = '';
-    userGoalsDisplay.classList.remove('hidden')
-    motivationVideoDisplay.classList.add('hidden')
+    userGoalsDisplay.classList.remove('hidden');
+    motivationVideoDisplay.classList.add('hidden');
 }
 
 function addTempStyle(elId, styClass) {
