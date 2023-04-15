@@ -12,5 +12,37 @@ const fetchData = (url) => {
       fetchData('http://localhost:3001/api/v1/activity')
     ])
   }
+
+  const postHydrationInfo = (log, update, display, formReset ) => {
+        fetch('http://localhost:3001/api/v1/hydration', {
+        method: 'POST',
+        body: JSON.stringify(log),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            } else {
+                return response.json();
+            }
+        })
+        .then(json => {
+            update();
+            display('success');
+            formReset();
+        })
+        .catch(err => {
+            if (err === 422) {
+                display('allFields');
+            } else {
+                display('other');
+            }
+            formReset();
+        });
+  };
+
   
-  export { fetchAllData }
+  
+  export { fetchAllData, postHydrationInfo }

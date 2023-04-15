@@ -7,7 +7,7 @@ import './images/wake-up.png';
 import './images/push-up.png';
 import './images/gm-logo.png';
 import datepicker from 'js-datepicker'
-import { fetchAllData } from './apiCalls';
+import { fetchAllData, postHydrationInfo } from './apiCalls';
 import UserRepository from './UserRepository';
 import User from './User';
 import Sleep from './Sleep';
@@ -153,22 +153,22 @@ function validateOunceFormDate() {
     const loggedDates = userHydration.userHydrationLogs.map(log => log.date);
     const date = new Date(subDate)
 
-if (loggedDates.includes(subDate)) {
+    if (loggedDates.includes(subDate)) {
         displayFormFeedback('logExists');
         return false;
     } else if (date.getTime() < Date.parse('2023/01/01')) {
         displayFormFeedback('tooEarly');
         return false;
-      } else {
+    } else {
         return true
-      }
+    }
 };
 
 function checkIsDate(dateString) {
     const date = Date.parse(dateString);
-    
+
     if (date) {
-      return true;
+        return true;
     } else {
         displayFormFeedback('invalidDate');
         return false;
@@ -194,64 +194,40 @@ function formatFormSubDate(formDate) {
 
 function submitOuncesForm() {
     if (checkIsDate(ouncesFormDate.value) && validateOunceFormDate() && validateOunceFormOz()) {
-        const newLog = {
+        var newLog = {
             "userID": user.id,
             "date": formatFormSubDate(ouncesFormDate.value),
             "numOunces": Number(ouncesFormOunces.value)
-        }
 
-        fetch('http://localhost:3001/api/v1/hydration', {
-            method: 'POST',
-            body: JSON.stringify(newLog),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(response.status);
-                } else {
-                    return response.json();
-                }
-            })
-            .then(json => {
-                updateOuncesInformation();
-                displayFormFeedback('success');
-                resetForm();
-            })
-            .catch(err => {
-                if (err === 422) {
-                    displayFormFeedback('allFields');
-                } else {
-                    displayFormFeedback('other');
-                }
-                resetForm();
-            });
-    };
+        };
+
+        postHydrationInfo(newLog, updateOuncesInformation, displayFormFeedback, resetForm);
+    }
+
 };
 
-function updateOuncesInformation() {
-    fetch('http://localhost:3001/api/v1/hydration')
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(response.status)
-            } else {
-                return response.json()
-            }
-        })
-        .then((data) => {
-            assignNewHydrationLogs (data)
-            addTempStyle('ozWeek', 'highlight');
-            addTempStyle('ozDay', 'highlight');
-        })
-        .catch(err => {
-            displayFormFeedback('other')
-        });
-};
+// function updateOuncesInformation() {
+//     fetch('http://localhost:3001/api/v1/hydration')
+//         .then((response) => {
+//             if (!response.ok) {
+//                 throw new Error(response.status)
+//             } else {
+//                 return response.json()
+//             }
+//         })
+//         .then((data) => {
+//             assignNewHydrationLogs(data)
+//             addTempStyle('ozWeek', 'highlight');
+//             addTempStyle('ozDay', 'highlight');
+//         })
+//         .catch(err => {
+//             displayFormFeedback('other')
+//         });
+// };
 
-function assignNewHydrationLogs (recList){
+function assignNewHydrationLogs(recList) {
     const newLogs = recList.hydrationData.filter(log => log.userID === user.id)
-                                          .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
     userHydration.userHydrationLogs = newLogs;
     generateRowOneWidgets();
     generateRowTwoWidgets();
