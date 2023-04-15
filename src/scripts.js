@@ -201,36 +201,18 @@ function submitOuncesForm() {
 
         };
 
-        postHydrationInfo(newLog, updateOuncesInformation, displayFormFeedback, resetForm);
+        postHydrationInfo(newLog, assignNewHydrationLogs, displayFormFeedback, resetForm);
     }
 
 };
 
-// function updateOuncesInformation() {
-//     fetch('http://localhost:3001/api/v1/hydration')
-//         .then((response) => {
-//             if (!response.ok) {
-//                 throw new Error(response.status)
-//             } else {
-//                 return response.json()
-//             }
-//         })
-//         .then((data) => {
-//             assignNewHydrationLogs(data)
-//             addTempStyle('ozWeek', 'highlight');
-//             addTempStyle('ozDay', 'highlight');
-//         })
-//         .catch(err => {
-//             displayFormFeedback('other')
-//         });
-// };
-
-function assignNewHydrationLogs(recList) {
-    const newLogs = recList.hydrationData.filter(log => log.userID === user.id)
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
-    userHydration.userHydrationLogs = newLogs;
+function assignNewHydrationLogs(log) {
+    userHydration.userHydrationLogs.push(log)
+    userHydration.userHydrationLogs.sort((a, b) => new Date(a.date) - new Date(b.date));
     generateRowOneWidgets();
     generateRowTwoWidgets();
+    addTempStyle('ozWeek', 'highlight');
+    addTempStyle('ozDay', 'highlight');
 }
 
 function displayFormFeedback(type) {
