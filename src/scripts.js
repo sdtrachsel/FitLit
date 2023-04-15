@@ -137,6 +137,44 @@ function setUserGoals() {
     <p>Step Goal: ${user.dailyStepGoal}</p>`;
 };
 
+function validateOunceFormOz() {
+    const subOz = Number(ouncesFormOunces.value);
+
+    if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
+        return true;
+    } else {
+        displayFormFeedback('invalidOz');
+        return false;
+    };
+};
+
+function validateOunceFormDate() {
+    const subDate = formatFormSubDate(ouncesFormDate.value);
+    const loggedDates = userHydration.userHydrationLogs.map(log => log.date);
+    const date = new Date(subDate)
+
+if (loggedDates.includes(subDate)) {
+        displayFormFeedback('logExists');
+        return false;
+    } else if (date.getTime() < Date.parse('2023/01/01')) {
+        displayFormFeedback('tooEarly');
+        return false;
+      } else {
+        return true
+      }
+};
+
+function checkIsDate(dateString) {
+    const date = Date.parse(dateString);
+    
+    if (date) {
+      return true;
+    } else {
+        displayFormFeedback('invalidDate');
+        return false;
+    }
+};
+
 function formatFormSubDate(formDate) {
     const date = formDate.split('/');
     let formDay = date[1];
@@ -152,43 +190,6 @@ function formatFormSubDate(formDate) {
     };
 
     return (`${formYear}/${formMonth}/${formDay}`);
-};
-
-function validateOunceFormOz() {
-    const subOz = Number(ouncesFormOunces.value);
-
-    if ((typeof subOz) === 'number' && subOz > 0 && subOz < 1001) {
-        return true;
-    } else {
-        displayFormFeedback('invalidOz');
-        return false;
-    };
-};
-
-function validateOunceFormDate() {
-    const subDate = formatFormSubDate(ouncesFormDate.value);
-    let loggedDates = userHydration.userHydrationLogs.map(log => log.date);
-
-    if (!loggedDates.includes(subDate)) {
-        return true;
-    } else if (loggedDates.includes(subDate)) {
-        displayFormFeedback('logExists');
-        return false;
-    }
-};
-
-function checkIsDate(dateSrting) {
-    const date = dateSrting.split('/');
-    let formDay = Number(date[1]);
-    let formMonth = Number(date[0]);
-    let formYear = Number(date[2]);
-
-    if (formDay > 0 && formDay < 32 && formMonth > 0 && formMonth < 13 && formYear > 2000) {
-        return true;
-    } else {
-        displayFormFeedback('invalidDate');
-        return false;
-    }
 };
 
 function submitOuncesForm() {
@@ -235,19 +236,26 @@ function updateOuncesInformation() {
             if (!response.ok) {
                 throw new Error(response.status)
             } else {
-                response.json()
+                return response.json()
             }
         })
         .then((data) => {
-            const newLogs = data.hydrationData.filter(log => log.userID === user.id)
-            userHydration.userHydrationLogs = newLogs;
-            generateRowOneWidgets();
-            generateRowTwoWidgets();
+            assignNewHydrationLogs (data)
             addTempStyle('ozWeek', 'highlight');
             addTempStyle('ozDay', 'highlight');
         })
-        .catch(err => displayFormFeedback('other'));
+        .catch(err => {
+            displayFormFeedback('other')
+        });
 };
+
+function assignNewHydrationLogs (recList){
+    const newLogs = recList.hydrationData.filter(log => log.userID === user.id)
+                                          .sort((a, b) => new Date(a.date) - new Date(b.date));
+    userHydration.userHydrationLogs = newLogs;
+    generateRowOneWidgets();
+    generateRowTwoWidgets();
+}
 
 function displayFormFeedback(type) {
     formFeedback.innerText = `${feedback[type]}`;
