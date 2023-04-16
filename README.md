@@ -25,6 +25,8 @@ This application was completed in 2 different one week segments to introduce agi
 
 ## Application Preview
 
+![gloryMuscles preview](https://user-images.githubusercontent.com/122052199/232322760-eb11a8da-d813-4ee0-9e16-e0a3bbdff7ed.gif)
+
 ## Techonologies Used
 - JavaScript
 - CSS & HTML
