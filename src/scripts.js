@@ -208,10 +208,23 @@ function submitOuncesForm() {
 function assignNewHydrationLogs(log) {
     userHydration.userHydrationLogs.push(log);
     userHydration.userHydrationLogs.sort((a, b) => new Date(a.date) - new Date(b.date));
-    generateRowOneWidgets();
-    generateRowTwoWidgets();
-    addTempStyle('ozWeek', 'highlight');
-    addTempStyle('ozDay', 'highlight');
+
+    updateHydroDisplay(log);
+}
+
+function updateHydroDisplay(log) {
+    const mostRecentLogDate = userHydration.findMostRecentDay();
+    const mostRecentLogWk = userHydration.userHydrationLogs.slice(-7).map(day => day.date);
+
+    if (mostRecentLogDate === log.date) {
+        generateRowOneWidgets();
+        generateRowTwoWidgets();
+        addTempStyle('ozWeek', 'highlight');
+        addTempStyle('ozDay', 'highlight');
+    } else if (mostRecentLogWk.includes(log.date)) {
+        generateRowTwoWidgets();
+        addTempStyle('ozWeek', 'highlight');
+    }
 }
 
 function displayFormFeedback(type) {
